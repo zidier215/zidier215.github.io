@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 页面标题将由 lang.js 动态设置 -->
+    <title data-zh="北京 · 饮食文化" data-en="Beijing · Food Culture">北京 · 饮食文化</title>
+    <meta name="description" content="解读北京饮食文化：从北京烤鸭、涮羊肉等名菜，到豆汁焦圈、炸酱面等小吃，推荐全聚德、东来顺等老字号，附王府井、簋街美食街攻略。">
+    <meta name="keywords" content="北京饮食文化,北京烤鸭,北京涮羊肉,炸酱面,豆汁焦圈,北京老字号美食,王府井小吃街,北京簋街">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入公共样式文件 -->
+    <link rel="stylesheet" href="assets/css/common.css">
+<!-- 修复：基于 html[lang] 属性和类精确控制饮食文化区域的中英文显示 -->
+<style>
+/*
+ * 核心思想：
+ * 1. 默认情况下（lang 不是 en 且没有 .lang-en 类），显示 .cn 内容，隐藏 .en 内容。
+ * 2. 当 html 的 lang 属性为 "en" 或有 .lang-en 类时，隐藏 .cn 内容，显示 .en 内容。
+ * 3. 强制确保标题 (h1, h2, h3) 和段落 (p) 在显示时是块级元素 (block)，独占一行。
+ */
+
+/* --- 关键修复：使用更高优先级和更明确条件的选择器 --- */
+
+/* 1. 默认/中文状态：无论 html 有没有特定类或属性，只要不是英文状态，就隐藏 .en */
+/*    使用 :not() 伪类来明确排除英文状态，提高优先级 */
+html:not([lang="en"]):not(.lang-en) .overview-section .en,
+html:not(.lang-en) .overview-section .en,
+.overview-section .en {
+    display: none !important; /* 最关键的修复 */
+}
+
+/* 2. 默认/中文状态：显示 .cn */
+html:not([lang="en"]):not(.lang-en) .overview-section .cn,
+html:not(.lang-en) .overview-section .cn,
+.overview-section .cn {
+    display: block !important; /* 确保显示并独占一行 */
+}
+
+/* --- 英文状态 --- */
+/* 3. 当 html 有 lang="en" 属性时，隐藏 .cn, 显示 .en */
+html[lang="en"] .overview-section .cn {
+    display: none !important;
+}
+html[lang="en"] .overview-section .en {
+    display: block !important;
+}
+
+/* 4. 当 html 有 .lang-en 类时，隐藏 .cn, 显示 .en (兼容旧逻辑) */
+html.lang-en .overview-section .cn {
+    display: none !important;
+}
+html.lang-en .overview-section .en {
+    display: block !important;
+}
+
+/*
+ * 增强：确保这些元素是块级元素
+ */
+.overview-section h1.cn,
+.overview-section h2.cn,
+.overview-section h3.cn,
+.overview-section h4.cn,
+.overview-section h5.cn,
+.overview-section h6.cn,
+.overview-section p.cn,
+.overview-section h1.en,
+.overview-section h2.en,
+.overview-section h3.en,
+.overview-section h4.en,
+.overview-section h5.en,
+.overview-section h6.en,
+.overview-section p.en {
+    display: block !important;
+    /* margin-top: 0 !important; */ /* 如果需要 */
+}
+
+</style>
+</head>
+<body>
+    <!-- 导航栏组件 (与 index.html 一致) -->
+    <header class="navbar">
+        <div class="logo">
+            <span class="cn">北京</span>
+            <span class="en">Beijing</span>
+        </div>
+        
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html" class="cn">首页</a><a href="index.html" class="en">Home</a></li>
+                <li><a href="history.html" class="cn">历史文化</a><a href="history.html" class="en">History</a></li>
+                <li><a href="modern.html" class="cn">现代发展</a><a href="modern.html" class="en">Modern</a></li>
+                <li><a href="landmarks.html" class="cn">地标巡礼</a><a href="landmarks.html" class="en">Landmarks</a></li>
+                <li><a href="travel-guide.html" class="cn">旅游攻略</a><a href="travel-guide.html" class="en">Tourist Guide</a></li>
+                <li><a href="food.html" class="active cn">饮食文化</a><a href="food.html" class="active en">Food Culture</a></li>
+            </ul>
+        </nav>
+        
+        <div class="controls">
+            <!-- 语言切换按钮 -->
+            <button id="langToggle" class="control-btn">
+                <i class="fas fa-globe"></i>
+            </button>
+            
+			<!-- 音效开关 (添加这行) -->
+			<button id="audioToggle" class="control-btn">
+				<i class="fas fa-volume-mute"></i> <!-- 初始图标可以是静音 -->
+			</button>
+
+			<!-- 移动端菜单按钮 -->
+			<button id="menuToggle" class="control-btn mobile-only">
+				<i class="fas fa-bars"></i>
+			</button>
+				</div>
+	</header>
+    
+    <!-- 移动端菜单 (与 index.html 一致) -->
+    <div id="mobileMenu" class="mobile-menu">
+        <ul>
+            <li><a href="index.html" class="cn">首页</a><a href="index.html" class="en">Home</a></li>
+            <li><a href="history.html" class="cn">历史文化</a><a href="history.html" class="en">History</a></li>
+            <li><a href="modern.html" class="cn">现代发展</a><a href="modern.html" class="en">Modern</a></li>
+            <li><a href="landmarks.html" class="cn">地标巡礼</a><a href="landmarks.html" class="en">Landmarks</a></li>
+            <li><a href="travel-guide.html" class="cn">旅游攻略</a><a href="travel-guide.html" class="en">Tourist Guide</a></li>
+            <li><a href="food.html" class="active cn">饮食文化</a><a href="food.html" class="active en">Food Culture</a></li>
+        </ul>
+    </div>
+
+    <!-- 主内容区 -->
+    <main class="main-content">
+        <!-- 页面头部 -->
+        <section class="page-header animate-on-scroll">
+            <h1 class="cn">北京饮食文化</h1>
+            <h1 class="en">Beijing Food Culture</h1>
+            <p class="cn">品味古都风味，感受百年传承的饮食艺术</p>
+            <p class="en">Taste the flavors of the ancient capital and experience centuries of culinary artistry</p>
+        </section>
+
+        <!-- 饮食文化简介 -->
+        <section class="overview-section animate-on-scroll">
+            <div class="section-header">
+                <h2 class="cn">千年古都的饮食传奇</h2>
+                <h2 class="en">The Culinary Legend of a Millennium Capital</h2>
+            </div>
+            
+            <div class="overview-content">
+                <div class="overview-text">
+                    <p class="cn">北京饮食文化源远流长，融合了宫廷菜、官府菜、地方菜和民间小吃的精华，形成了独具特色的"京味"饮食体系。作为七朝古都，北京的饮食文化既体现了皇家气派，又蕴含着市井风情，是中华饮食文化的重要组成部分。</p>
+                    <p class="en">Beijing's food culture, with a long history, blends the essence of imperial court cuisine, official cuisine, regional dishes, and folk snacks, forming a unique 'Beijing flavor' culinary system. As a capital for seven dynasties, Beijing's food culture embodies imperial grandeur while also containing the charm of everyday life, making it an important part of Chinese culinary culture.</p>
+                    
+                    <p class="cn">从享誉世界的北京烤鸭到地道的街头小吃，每一道美食都讲述着北京的故事，承载着这座城市的历史记忆和文化底蕴。</p>
+                    <p class="en">From the world-renowned Peking Duck to authentic street snacks, every dish tells a story of Beijing, carrying the city's historical memories and cultural heritage.</p>
+                </div>
+                
+                <div class="overview-stats">
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="1000">1000+</div>
+                        <div class="cn stat-label">年历史</div>
+                        <div class="en stat-label">Years of History</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="100">100+</div>
+                        <div class="cn stat-label">种特色小吃</div>
+                        <div class="en stat-label">Types of Snacks</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" data-target="50">50+</div>
+                        <div class="cn stat-label">家百年老店</div>
+                        <div class="en stat-label">Centennial Shops</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+		
+        <!-- 饮食文化内容 -->
+        <section class="overview-section animate-on-scroll">
+           
+            <!-- 标题：饮食文化 -->
+            <h2 class="section-title cn" style="margin-top: 0;">饮食文化</h2>
+            <h2 class="section-title en" style="margin-top: 0;">Food Culture</h2>
+			
+            <p class="cn">
+                北京饮食文化融合了宫廷菜的精致、地方菜的鲜活与民间小吃的烟火气，形成独具特色的“京味饮食”体系，既承载着历史传承，又体现着地域生活智慧。
+            </p>
+            <p class="en">
+                Beijing's food culture integrates the delicacy of imperial cuisine, the freshness of local dishes, and the warmth of folk snacks, forming a unique "Beijing-style food" system that not only carries historical heritage but also reflects the wisdom of local life.
+            </p>
+
+            <!-- 1. 核心饮食体系 -->
+            <h2 class="cn">1. 核心饮食体系</h2>
+            <h2 class="en">1. Core Cuisine System</h2>
+
+            <!-- （1）宫廷菜与官府菜 -->
+            <h3 class="food-item cn">（1）宫廷菜与官府菜</h3>
+            <h3 class="food-item en">（1）Imperial and Official Cuisine</h3>
+            <p class="cn">
+                曾为皇家及达官贵人专供，讲究“选料严苛、技法精湛、摆盘雅致”，注重食材本味与营养搭配。代表菜品如“葱烧海参”（Braised Sea Cucumber with Scallions），以优质海参为主料，搭配葱段慢烧，咸鲜浓郁；“扒鸡丝翅”（Braised Chicken Shreds with Shark's Fin），工艺繁复，口感醇厚，是宫廷菜“精细”特质的典型体现。
+            </p>
+            <p class="en">
+                Once exclusive to the royal family and nobles, it emphasizes "strict ingredient selection, exquisite techniques, and elegant plating," focusing on the original flavor of ingredients and nutritional matching. Representative dishes include "Braised Sea Cucumber with Scallions"—using high-quality sea cucumbers as the main ingredient, braised slowly with scallion sections, offering a rich savory taste—and "Braised Chicken Shreds with Shark's Fin," which features complex craftsmanship and a mellow taste, typical of the "delicacy" of imperial cuisine.
+            </p>
+
+            <!-- （2）京味家常菜 -->
+            <h3 class="food-item cn">（2）京味家常菜</h3>
+            <h3 class="food-item en">（2）Beijing-Style Home-Cooked Dishes</h3>
+            <p class="cn">
+                贴近百姓生活，做法朴实却滋味地道，注重“家常感与实用性”。如“炒合菜”（Stir-Fried Mixed Vegetables），将豆芽、韭菜、粉丝、鸡蛋等简单食材同炒，鲜香爽口，是老北京餐桌上常见的应季菜；“醋溜白菜”（Vinegar-Flavored Chinese Cabbage），以白菜为主料，用醋提味，酸甜解腻，体现家常菜“低成本、高适口性”的特点。
+            </p>
+            <p class="en">
+                Close to people's daily life, it features simple cooking methods yet authentic flavors, focusing on "homeliness and practicality." For example, "Stir-Fried Mixed Vegetables"—stir-frying simple ingredients like bean sprouts, chives, vermicelli, and eggs together, fresh and refreshing—is a common seasonal dish on old Beijing's dining tables. "Vinegar-Flavored Chinese Cabbage," using Chinese cabbage as the main ingredient and vinegar for flavoring, is sweet, sour, and refreshing, reflecting the characteristics of home-cooked dishes: "low cost and high palatability."
+            </p>
+
+            <!-- （3）传统民间小吃 -->
+            <h3 class="food-item cn">（3）传统民间小吃</h3>
+            <h3 class="food-item en">（3）Traditional Folk Snacks</h3>
+            <p class="cn">
+                是京味饮食的“活化石”，多为街头巷尾的经典美味，承载着老北京的生活记忆。除此前提及的豆汁儿焦圈、炸酱面外，还有“驴打滚”（Lv Da Gun / Glutinous Rice Roll with Red Bean Paste）——以糯米粉制作外皮，包裹红豆沙，滚上黄豆面，软糯香甜；“艾窝窝”（Ai Wo Wo / Glutinous Rice Cake with Sweet Filling）——用艾草汁和糯米制成皮，内包芝麻、核桃等馅料，清香软糯，是节庆时节的特色小吃。
+            </p>
+            <p class="en">
+                As the "living fossil" of Beijing-style food, most are classic delicacies from streets and alleys, carrying the life memories of old Beijing. In addition to the previously mentioned Douzhi'er with Jiaoquan and Zhajiang Mian, there is also "Lv Da Gun (Glutinous Rice Roll with Red Bean Paste)"—made with glutinous rice flour for the outer layer, wrapped with red bean paste, and rolled in soybean flour, soft, glutinous, and sweet; "Ai Wo Wo (Glutinous Rice Cake with Sweet Filling)"—made with mugwort juice and glutinous rice for the skin, filled with sesame seeds, walnuts, and other fillings, fragrant and soft, a characteristic snack during festivals.
+            </p>
+
+
+            <!-- 2. 饮食文化特色 -->
+            <h2 class="cn">2. 饮食文化特色</h2>
+            <h2 class="en">2. Characteristics of Food Culture</h2>
+
+            <!-- （1）“包容性”显著 -->
+            <h3 class="food-item cn">（1）“包容性”显著</h3>
+            <h3 class="food-item en">（1）Strong "Inclusiveness"</h3>
+            <p class="cn">
+                北京作为历史古都与交通枢纽，吸纳了各地饮食精华：如从山东菜借鉴“爆、炒”技法，丰富京菜烹饪方式；从清真饮食中吸收“涮、烤”特色，衍生出涮羊肉等经典菜品；甚至受西餐影响，出现“京味炸猪排”等融合菜式，体现“海纳百川”的饮食格局。
+            </p>
+            <p class="en">
+                As an ancient capital and transportation hub, Beijing has absorbed the essence of food from all over the country: it learned the "quick-frying and stir-frying" techniques from Shandong cuisine to enrich the cooking methods of Beijing cuisine; absorbed the "hot pot and roasting" characteristics from halal food, leading to classic dishes like Instant-Boiled Mutton; and even influenced by Western food, developed fusion dishes such as "Beijing-style fried pork chops," reflecting the "inclusive" pattern of food culture.
+            </p>
+
+            <!-- （2）“节气与饮食”结合 -->
+            <h3 class="food-item cn">（2）“节气与饮食”结合</h3>
+            <h3 class="food-item en">（2）Integration of "Solar Terms and Food"</h3>
+            <p class="cn">
+                老北京饮食讲究顺应季节变化：立春吃“春饼”（Spring Pancakes），卷食豆芽、韭菜等“时鲜”，寓意“咬春”；冬至吃“饺子”（Dumplings），民间有“冬至不端饺子碗，冻掉耳朵没人管”的俗语；立秋吃“贴秋膘”（Putting on Autumn Fat），多吃肉类补充能量，应对秋冬寒冷，体现饮食与自然节律的紧密关联。
+            </p>
+            <p class="en">
+                Old Beijing's food culture emphasizes adapting to seasonal changes: on the Beginning of Spring, people eat "Spring Pancakes," rolled with seasonal ingredients like bean sprouts and chives, implying "biting the spring"; on the Winter Solstice, people eat "Dumplings," with a folk saying "If you don't eat dumplings on Winter Solstice, your ears will freeze off"; on the Beginning of Autumn, people "put on autumn fat"—eating more meat to replenish energy for the cold autumn and winter, reflecting the close connection between food and natural rhythms.
+            </p>
+
+            <!-- （3）“礼仪与氛围”并重 -->
+            <h3 class="food-item cn">（3）“礼仪与氛围”并重</h3>
+            <h3 class="food-item en">（3）Equal Emphasis on "Etiquette and Atmosphere"</h3>
+            <p class="cn">
+                无论是家庭聚餐还是宴请宾客，北京饮食都注重礼仪：如宴席上“主位、客位”的划分，上菜时“先冷后热、先荤后素”的顺序；同时讲究“饮食氛围”，比如吃涮羊肉时围炉而坐，边煮边聊，体现“热闹团圆”的社交属性；喝豆汁儿时配焦圈，需在街头小摊或老字号店铺享用，感受“市井烟火气”，让饮食成为体验生活方式的载体。
+            </p>
+            <p class="en">
+                Whether it's a family dinner or a banquet for guests, Beijing's food culture emphasizes etiquette: such as the division of "host seats and guest seats" at banquets, and the order of serving dishes "cold first, then hot; meat first, then vegetarian"; it also pays attention to "dining atmosphere"—for example, sitting around a stove while eating Instant-Boiled Mutton, cooking and chatting, reflecting the social attribute of "lively reunion"; when drinking Douzhi'er with Jiaoquan, people usually enjoy it at street stalls or time-honored shops to feel the "vitality of the market," making food a carrier for experiencing the lifestyle.
+            </p>
+        </section>
+		
+        <!-- 特色美食 -->
+        <section class="architecture-grid animate-on-scroll">
+            <h2 class="section-title cn">北京特色美食</h2>
+            <h2 class="section-title en">Beijing Specialties</h2>
+            
+            <!-- 北京烤鸭 -->
+            <div class="architecture-card animate-in">
+			  
+                <img src="https://cdn.pixabay.com/photo/2015/08/21/06/35/pak-king-duck-898500_1280.jpg" alt="北京烤鸭" class="architecture-image">
+                <div class="card-content">
+                    <h3 class="cn">北京烤鸭</h3>
+                    <h3 class="en">Peking Duck</h3>
+                    <p class="cn">北京最具代表性的美食，被誉为"天下第一美味"。其历史可追溯至明朝，在清朝成为宫廷名菜，如今已成为北京饮食文化的象征。</p>
+                    <p class="en">The most representative dish of Beijing, hailed as the 'greatest delicacy under heaven.' Its history can be traced back to the Ming Dynasty, becoming a famous imperial dish during the Qing Dynasty, and is now a symbol of Beijing's food culture.</p>
+                    <a href="#" class="more-link cn">了解更多</a>
+                    <a href="#" class="more-link en">Learn More</a>
+                </div>
+            </div>
+            
+            <!-- 涮羊肉 -->
+            <div class="architecture-card animate-in">
+                <img src="https://cdn.pixabay.com/photo/2015/03/20/01/46/meat-681658_1280.jpg" alt="涮羊肉" class="architecture-image">
+                <div class="card-content">
+                    <h3 class="cn">涮羊肉</h3>
+                    <h3 class="en">Hot Pot with Sliced Lamb</h3>
+                    <p class="cn">又称"羊肉火锅"，是北京冬季最受欢迎的美食之一。源于蒙古人的饮食习惯，在清代传入北京后逐渐形成了独特的京味风格。</p>
+                    <p class="en">Also known as 'mutton hot pot,' it is one of the most popular dishes in Beijing during winter. Originating from Mongolian dietary habits, it gradually developed a unique Beijing style after being introduced to Beijing during the Qing Dynasty.</p>
+                    <a href="#" class="more-link cn">了解更多</a>
+                    <a href="#" class="more-link en">Learn More</a>
+                </div>
+            </div>
+            
+            <!-- 炸酱面 -->
+            <div class="architecture-card animate-in">
+                <img src="https://cdn.pixabay.com/photo/2015/03/26/09/05/background-689993_1280.jpg" alt="炸酱面" class="architecture-image">
+                <div class="card-content">
+                    <h3 class="cn">炸酱面</h3>
+                    <h3 class="en">Zhajiangmian (Noodles with Soybean Paste)</h3>
+                    <p class="cn">北京最具代表性的传统面食，是老北京人日常生活中不可或缺的美食。其历史悠久，做法简单却风味独特，体现了北京饮食的朴实与精致。</p>
+                    <p class="en">The most representative traditional noodle dish in Beijing and an indispensable delicacy in the daily life of Beijingers. It has a long history, simple preparation, yet a unique flavor, embodying the simplicity and refinement of Beijing cuisine.</p>
+                    <a href="#" class="more-link cn">了解更多</a>
+                    <a href="#" class="more-link en">Learn More</a>
+                </div>
+            </div>
+            
+            <!-- 豆汁儿焦圈 -->
+            <div class="architecture-card animate-in">
+                <img src="https://www.beijing.gov.cn/renwen/lsfm/msfy/201803/W020200421536398215013.jpg" alt="豆汁儿焦圈" class="architecture-image">
+                <div class="card-content">
+                    <h3 class="cn">豆汁儿焦圈</h3>
+                    <h3 class="en">Douzhir Jiaoquan (Fermented Bean Juice & Fried Dough Ring)</h3>
+                    <p class="cn">最具北京特色的传统小吃，被誉为"北京人的咖啡"。这道看似普通的小吃有着悠久的历史，是老北京人日常生活中不可或缺的早餐选择。</p>
+                    <p class="en">The most distinctive traditional snack in Beijing, hailed as 'Beijing people's coffee.' This seemingly ordinary snack has a long history and is an indispensable breakfast choice in the daily life of Beijingers.</p>
+                    <a href="#" class="more-link cn">了解更多</a>
+                    <a href="#" class="more-link en">Learn More</a>
+                </div>
+            </div>
+            
+            <!-- 爆肚 -->
+            <div class="architecture-card animate-in">
+                <img src="https://japanese.beijing.gov.cn/livinginbeijing/dining/202011/W020201120606580245144.jpg" alt="爆肚" class="architecture-image">
+                <div class="card-content">
+                    <h3 class="cn">爆肚</h3>
+                    <h3 class="en">Baodu (Quick-Boiled Tripe)</h3>
+                    <p class="cn">将牛肚或羊肚在沸水中快速焯烫后，蘸芝麻酱食用，脆嫩可口，是北京著名小吃。</p>
+                    <p class="en">Beef or sheep tripe is quickly blanched in boiling water and eaten with sesame paste. It's crisp, tender, and a famous Beijing snack.</p>
+                    <a href="#" class="more-link cn">了解更多</a>
+                    <a href="#" class="more-link en">Learn More</a>
+                </div>
+            </div>
+            
+            <!-- 糖火烧 -->
+            <div class="architecture-card animate-in">
+                <img src="https://www.beijing.gov.cn/renwen/lsfm/msfy/201803/W020200421536397937503.jpg" alt="糖火烧" class="architecture-image">
+                <div class="card-content">
+                    <h3 class="cn">糖火烧</h3>
+                    <h3 class="en">Tanghuoshao (Sweet Sesame Seed Cake)</h3>
+                    <p class="cn">北京传统甜食，以芝麻酱和红糖为馅，外皮酥脆，内里香甜。</p>
+                    <p class="en">A traditional Beijing sweet treat, filled with sesame paste and brown sugar, with a crispy exterior and a sweet, fragrant interior.</p>
+                    <a href="#" class="more-link cn">了解更多</a>
+                    <a href="#" class="more-link en">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 美食街区 -->
+        <section class="quick-nav animate-on-scroll">
+            <h2 class="section-title cn">北京美食街区</h2>
+            <h2 class="section-title en">Beijing Food Streets</h2>
+            
+            <div class="nav-card">
+                <a href="#">
+                    <img src="https://www.beijing.gov.cn/gate/big5/www.beijing.gov.cn/renwen/rwzyd/qxdw/qjdcjzhh/wfjdj/202309/W020240708609414215279.jpg" alt="王府井小吃街" class="card-image">
+                    <div class="card-content">
+                        <h3 class="cn">王府井小吃街</h3>
+                        <h3 class="en">Wangfujing Snack Street</h3>
+                        <p class="cn">位于王府井步行街，汇集了北京及全国各地的特色小吃，是游客品尝北京美食的热门去处。</p>
+                        <p class="en">Located on Wangfujing Pedestrian Street, it gathers特色 snacks from Beijing and across the country, a popular spot for tourists.</p>
+                        <span class="more-link cn">了解更多 →</span>
+                        <span class="more-link en">Learn more →</span>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="nav-card">
+                <a href="#">
+                    <img src="https://picsum.photos/id/430/600/400" alt="簋街" class="card-image">
+                    <div class="card-content">
+                        <h3 class="cn">簋街</h3>
+                        <h3 class="en">Gui Street</h3>
+                        <p class="cn">位于东直门内，是北京最著名的美食街之一，以麻辣小龙虾、火锅、烧烤等为主，夜市氛围浓厚。</p>
+                        <p class="en">Located inside Dongzhimen, it's one of Beijing's most famous food streets, known for spicy crayfish, hot pot, and barbecue, with a vibrant night market atmosphere.</p>
+                        <span class="more-link cn">了解更多 →</span>
+                        <span class="more-link en">Learn more →</span>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="nav-card">
+                <a href="#">
+                    <img src="https://cdn.pixabay.com/photo/2022/07/20/19/11/liver-dumpling-7334775_1280.jpg" alt="护国寺小吃街" class="card-image">
+                    <div class="card-content">
+                        <h3 class="cn">护国寺小吃街</h3>
+                        <h3 class="en">Huguo Temple Snack Street</h3>
+                        <p class="cn">位于西城区，是品尝老北京传统小吃的最佳去处，汇集了护国寺小吃、锦芳小吃等老字号。</p>
+                        <p class="en">Located in Xicheng District, it's the best place to taste traditional Beijing snacks, gathering old shops like Huguo Temple Snacks and Jinfang Snacks.</p>
+                        <span class="more-link cn">了解更多 →</span>
+                        <span class="more-link en">Learn more →</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+
+    </main>
+
+    <!-- 页脚 (与 index.html 一致) -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="cn">© 2025 北京城市介绍 | 探索这座城市的历史与未来</p>
+            <p class="en">© 2025 Beijing City Guide | Explore the history and future of the city</p>
+        </div>
+    </footer>
+	
+	<!-- 音频元素 (添加这行) -->
+    <audio id="backgroundMusic" loop>
+        <source src="assets/audio/bgm.mp3" type="audio/mpeg">
+        <!-- 可以添加更多格式的 source 以提高兼容性 -->
+        您的浏览器不支持音频元素。
+    </audio>
+
+    <!-- 字体调节工具 (与 index.html 一致) -->
+    <div class="font-controls">
+        <button id="fontDecrease" class="font-btn">
+            <i class="fas fa-text-height"></i> A-
+        </button>
+        <button id="fontIncrease" class="font-btn">
+            <i class="fas fa-text-height"></i> A+
+        </button>
+    </div>
+
+    <!-- 脚本 (与 index.html 一致) -->
+    <script src="assets/js/lang.js"></script>
+    <script src="assets/js/ui.js"></script>
+    <script src="assets/js/index.js"></script>
+</body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北京 · 古今交响</title>
+	 <meta name="description" content="北京现代发展成就，科技创新、冬奥会遗产、城市更新,北京，中国首都、双奥之城，拥有3000年建城史与7处世界遗产，兼具故宫等历史底蕴与中关村科技活力，一文了解北京古今交融的城市魅力。">
+    <meta name="keywords" content="北京,现代发展,科技创新,冬奥会,城市更新,北京,北京介绍,北京旅游,双奥之城,北京历史文化,北京现代发展,北京世界遗产,北京城市攻略">
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏组件 -->
+    <header class="navbar">
+        <div class="logo">
+            <span class="cn">北京</span>
+            <span class="en">Beijing</span>
+        </div>
+        
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html" class="active cn">首页</a><a href="index.html" class="active en">Home</a></li>
+                <li><a href="history.html" class="cn">历史文化</a><a href="history.html" class="en">History</a></li>
+                <li><a href="modern.html" class="cn">现代发展</a><a href="modern.html" class="en">Modern</a></li>
+                <li><a href="landmarks.html" class="cn">地标巡礼</a><a href="landmarks.html" class="en">Landmarks</a></li>
+                <li><a href="travel-guide.html" class="cn">旅游攻略</a><a href="travel-guide.html" class="en">tourist highway</a></li>
+                <li><a href="food.html" class="cn">饮食文化</a><a href="food.html" class="en">Food Culture</a></li>
+            </ul>
+        </nav>
+        
+        <div class="controls">
+            <!-- 语言切换按钮 -->
+            <button id="langToggle" class="control-btn">
+                <i class="fas fa-globe"></i>
+            </button>
+            
+            <!-- 音效开关 -->
+            <button id="audioToggle" class="control-btn">
+                <i class="fas fa-volume-mute"></i>
+            </button>
+            
+            <!-- 移动端菜单按钮 -->
+            <button id="menuToggle" class="control-btn mobile-only">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    
+    <!-- 移动端菜单 -->
+    <div id="mobileMenu" class="mobile-menu">
+        <ul>
+            <li><a href="index.html" class="cn">首页</a><a href="index.html" class="en">Home</a></li>
+            <li><a href="history.html" class="cn">历史文化</a><a href="history.html" class="en">History</a></li>
+            <li><a href="modern.html" class="cn">现代发展</a><a href="modern.html" class="en">Modern</a></li>
+            <li><a href="landmarks.html" class="cn">地标巡礼</a><a href="landmarks.html" class="en">Landmarks</a></li>
+	    <li><a href="travel-guide.html" class="cn">旅游攻略</a><a href="travel-guide.html" class="en">tourist highway</a></li>
+	    <li><a href="food.html" class="cn">饮食文化</a><a href="food.html" class="en">Food Culture</a></li>
+        </ul>
+    </div>
+    
+    <!-- 主视觉区域 -->
+    <section class="hero-section">
+        <div class="hero-background">
+            <!-- 背景图：故宫与现代建筑交融 -->
+            <img src="https://picsum.photos/id/1031/1920/1080" alt="北京古今建筑交融全景" class="hero-image">
+            
+            <!-- 视频背景（可选） -->
+            <div class="hero-video-container">
+                <video class="hero-video" autoplay muted loop playsinline>
+                    <source src="https://play.shipin.beijing.gov.cn/vod/2024/05/13/09/30a96324-9304-48a7-b50d-0f94c190e49b.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+        
+        <div class="hero-content">
+            <h1 class="cn">北京 · 古今交响</h1>
+            <h1 class="en">Beijing · Symphony of Past and Present</h1>
+            
+            <p class="cn">三千年建城史的文明印记 | 新时代全球城市的创新脉搏</p>
+            <p class="en">3,000 years of urban history | Innovation pulse of a global city</p>
+            
+            <div class="hero-cta">
+                <a href="#overview" class="btn-primary cn">探索北京</a>
+                <a href="#overview" class="btn-primary en">Explore Beijing</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 主内容区 -->
+    <main class="main-content" id="overview">
+        <!-- 城市概览 -->
+        <section class="overview-section animate-on-scroll">
+            <div class="section-header">
+                <h2 class="cn">城市概览</h2>
+                <h2 class="en">City Overview</h2>
+            </div>
+            
+            <div class="overview-content">
+                <div class="overview-text">
+                    <p class="cn">北京，中华人民共和国首都，是中国的政治、文化、国际交往和科技创新中心。这座城市拥有3000多年的建城史和860多年的建都史，曾是辽、金、元、明、清五朝帝都，积淀了深厚的历史文化底蕴。</p>
+                    <p class="en">Beijing, the capital of the People's Republic of China, is the country's political, cultural, international exchange, and technological innovation center. With over 3,000 years of urban history and more than 860 years as a capital city, it served as the imperial capital for five dynasties (Liao, Jin, Yuan, Ming, and Qing), accumulating profound historical and cultural heritage.</p>
+                    
+                    <p class="cn">今天的北京，既是一座古典与现代完美融合的国际大都市，也是中国改革开放和现代化建设的缩影。作为"双奥之城"，北京成功举办了2008年夏季奥运会和2022年冬季奥运会，向世界展示了其独特的魅力与活力。</p>
+                    <p class="en">Today's Beijing is both an international metropolis where the classical and modern blend perfectly, and a microcosm of China's reform and opening up and modernization drive. As the "Double Olympic City," Beijing successfully hosted the 2008 Summer Olympics and 2022 Winter Olympics, showcasing its unique charm and vitality to the world.</p>
+                </div>
+                
+                <div class="overview-stats">
+						<div class="stat-card">
+							<div class="stat-number" data-target="3060">3060+</div> <!-- 添加 data-target -->
+							<div class="cn stat-label">建城历史（年）</div>
+							<div class="en stat-label">Years of urban history</div>
+						</div>
+
+						<div class="stat-card">
+							<div class="stat-number" data-target="7">7</div> <!-- 添加 data-target -->
+							<div class="cn stat-label">世界遗产</div>
+							<div class="en stat-label">World Heritage Sites</div>
+						</div>
+
+						<div class="stat-card">
+							<div class="stat-number" data-target="21540000">2154万</div> <!-- 添加 data-target，注意是纯数字 -->
+							<div class="cn stat-label">常住人口</div>
+							<div class="en stat-label">Permanent population</div>
+						</div>
+
+						<div class="stat-card">
+							<div class="stat-number" data-target="27000">2.7万+</div> <!-- 添加 data-target，注意是纯数字 -->
+							<div class="cn stat-label">高新技术企业</div>
+							<div class="en stat-label">High-tech enterprises</div>
+						</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 快速导航 -->
+        <section class="quick-nav animate-on-scroll">
+             <div class="nav-card" style="background-image: url('https://cdn.pixabay.com/photo/2020/03/12/15/29/beijing-or-beijing-4925388_1280.jpg');">
+                <a href="history.html">
+                    <h3 class="cn">历史文化</h3>
+                    <h3 class="en">History & Culture</h3>
+                    <p class="cn">探索千年古都的历史脉络</p>
+                    <p class="en">Explore the historical context</p>
+                    <span class="more-link cn">了解更多 →</span>
+                    <span class="more-link en">Learn more →</span>
+                </a>
+            </div>
+            
+            <div class="nav-card" style="background-image: url('https://cdn.pixabay.com/photo/2017/01/18/13/10/galaxy-soho-1989816_1280.jpg');">
+                <a href="modern.html">
+                    <h3 class="cn">现代发展</h3>
+                    <h3 class="en">Modern Development</h3>
+                    <p class="cn">感受创新之都的科技活力</p>
+                    <p class="en">Experience technological vitality</p>
+                    <span class="more-link cn">了解更多 →</span>
+                    <span class="more-link en">Learn more →</span>
+                </a>
+            </div>
+            
+           
+	    <div class="nav-card" style="background-image: url('https://cdn.pixabay.com/photo/2014/11/22/09/07/the-national-palace-museum-541501_1280.jpg');">
+                <a href="landmarks.html">
+                    <h3 class="cn">地标巡礼</h3>
+                    <h3 class="en">Landmarks Tour</h3>
+                    <p class="cn">走访北京的标志性建筑</p>
+                    <p class="en">Visit iconic buildings</p>
+                    <span class="more-link cn">了解更多 →</span>
+                    <span class="more-link en">Learn more →</span>
+                </a>
+            </div>
+        </section>
+        
+        <!-- 著名景点 -->
+        <section class="quick-nav animate-on-scroll">
+            <h2 class="section-title cn">著名景点</h2> <!-- 添加一个标题 -->
+            <h2 class="section-title en">landmarks</h2> <!-- 添加一个标题 -->
+            <div class="nav-card attraction-card"> <!-- 使用 nav-card 类 -->
+                <a href="landmarks.html#forbidden-city"> <!-- 假设链接到地标页的具体位置 -->
+                    <img src="https://cdn.pixabay.com/photo/2020/03/03/03/17/the-national-palace-museum-4897428_1280.jpg" alt="故宫" class="card-image"> <!-- 添加图片 -->
+                    <div class="card-content"> <!-- 将内容包裹起来 -->
+			<h3 class="cn">故宫博物院</h3>
+                    	<h3 class="en">The Palace Museum</h3>
+                        <p class="cn">中国明清两代皇家宫殿，世界上现存规模最大、保存最为完整的木质结构古建筑之一，被誉为"紫禁城"。</p>
+                        <p class="en">It is the imperial palace of the Ming and Qing dynasties in China, one of the world's largest and best-preserved ancient wooden structures in existence, and is known as the "Forbidden City".</p>
+                        <span class="more-link cn">了解更多 →</span>
+                    	<span class="more-link en">Learn more →</span>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="nav-card attraction-card">
+                <a href="landmarks.html#great-wall">
+                    <img src="https://cdn.pixabay.com/photo/2017/03/30/23/36/the-great-wall-2190047_1280.jpg" alt="长城" class="card-image">
+                    <div class="card-content">
+			<h3 class="cn">八达岭长城</h3>
+                    	<h3 class="en">Badaling Great Wall</h3>
+                        <p class="cn">万里长城的重要组成部分，是明长城中保存最好的一段，地势险要，气势雄伟，有"天下九塞"之一的美誉。</p>
+                        <p class="en">It is an important part of the Great Wall of China, and the best-preserved section of the Great Wall built during the Ming Dynasty. With a strategically vital terrain and a majestic momentum, it is renowned as one of the "Nine Strategic Passes Under Heaven".</p>
+			<span class="more-link cn">了解更多 →</span>
+			<span class="more-link en">Learn more →</span>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="nav-card attraction-card">
+                <a href="landmarks.html#summer-palace">
+                    <img src="https://cdn.pixabay.com/photo/2020/02/05/19/50/summer-palace-4822213_1280.jpg" alt="颐和园" class="card-image">
+                    <div class="card-content">
+			<h3 class="cn">颐和园</h3>
+                    	<h3 class="en">The Summer Palace</h3>
+                        <p class="cn">中国清朝时期皇家园林，以昆明湖、万寿山为基址，集江南园林之精华，是皇家园林博物馆。</p>
+                        <p class="en">An imperial garden of China's Qing Dynasty, is built on the foundation of Kunming Lake and Longevity Hill. It integrates the essence of classical gardens in the Jiangnan region (the southern area south of the Yangtze River) and is renowned as a "Museum of Imperial Gardens.</p>
+			<span class="more-link cn">了解更多 →</span>
+			<span class="more-link en">Learn more →</span>
+                    </div>
+                </a>
+            </div>
+            <div class="nav-card attraction-card">
+                <a href="landmarks.html#summer-palace">
+                    <img src="https://cdn.pixabay.com/photo/2022/10/11/02/38/temple-of-heaven-7513135_1280.jpg" alt="颐和园" class="card-image">
+                    <div class="card-content">
+                        <h3></h3>
+			<h3 class="cn">天坛/地坛</h3>
+                    	<h3 class="en">The Temple of Heaven/Earth</h3>
+                        <p class="cn">天坛始建于明永乐十八年，是明清两代皇帝 “祭天”“祈谷”、连接君王与上天的重要场所；地坛又称方泽坛，始建于明嘉靖九年，是明清两朝帝王祭祀 “皇地祇神”、体现古代 “以农为本” 思想的场所。</p>                        
+                        <p class="en">First constructed in the 18th year of the Yongle reign of the Ming Dynasty, it was a crucial site for emperors of the Ming and Qing dynasties to "worship Heaven" and "pray for grain", serving as a link between the monarchs and the heavens.</p>                        
+			<span class="more-link cn">了解更多 →</span>
+			<span class="more-link en">Learn more →</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 特色美食 -->
+        <section class="quick-nav animate-on-scroll">
+            <h2 class="section-title cn">特色美食</h2> <!-- 添加一个标题 -->
+            <h2 class="section-title en">Foods</h2> <!-- 添加一个标题 -->
+            <div class="nav-card food-card"> <!-- 使用 nav-card 类，并添加一个特定类 -->
+                <a href="food.html#"> <!-- 调转 food  html网页 -->
+                    <img src="https://cdn.pixabay.com/photo/2015/08/21/06/35/pak-king-duck-898500_1280.jpg" alt="北京烤鸭" class="card-image">
+                    <div class="card-content">
+			<h3 class="cn">北京烤鸭</h3>
+                    	<h3 class="en">Peking Duck</h3>
+                        <p class="cn">外酥里嫩，搭配薄饼、甜面酱和葱丝，是北京最具代表性的美食。</p>
+                        <p class="en">Peking Duck, with its crispy outer skin and tender inner meat, is typically served with thin pancakes, sweet bean sauce, and shredded green onions. It is the most iconic delicacy of Beijing.</p>
+			<span class="more-link cn">了解更多 →</span>
+			<span class="more-link en">Learn more →</span>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="nav-card food-card">
+                <a href="food.html#"> <!-- 调转 food  html网页 -->
+                    <img src="https://cdn.pixabay.com/photo/2015/03/20/01/46/meat-681658_1280.jpg" alt="涮羊肉" class="card-image">
+                    <div class="card-content">
+			<h3 class="cn">涮羊肉</h3>
+                    	<h3 class="en">Instant-Boiled Mutton uses high-quality mutton</h3>
+                        <p class="cn">选用优质羊肉，在沸水中快速涮烫，蘸特制麻酱，鲜嫩可口。</p>
+                        <p class="en">Instant-Boiled Mutton uses high-quality mutton, which is quickly blanched in boiling water and then dipped in specially made sesame paste. It tastes fresh, tender and delicious.</p>
+                        <span class="more-link cn">了解更多 →</span> 
+			<span class="more-link en">Learn more →</span>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="nav-card food-card">
+               <a href="food.html#"> <!-- 调转 food  html网页 -->
+                    <img src="https://cdn.pixabay.com/photo/2015/03/26/09/05/background-689993_1280.jpg" alt="炸酱面" class="card-image">
+                    <div class="card-content">
+			<h3 class="cn">炸酱面</h3>
+                    	<h3 class="en">Zhajiang Mian (Fried Sauce Noodles)</h3>
+                        <p class="cn">以黄酱炒制肉末为卤，搭配手擀面和多种配菜，咸香浓郁。</p>
+                        <p class="en">Zhajiang Mian (Fried Sauce Noodles) features a topping of minced meat stir-fried with yellow soybean paste. It is served with hand-rolled noodles and a variety of side dishes, offering a rich, savory flavor.</p>
+			<span class="more-link cn">了解更多 →</span>
+			<span class="more-link en">Learn more →</span>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="nav-card food-card">
+              <a href="food.html#"> <!-- 调转 food  html网页 -->
+                    <img src="https://cdn.pixabay.com/photo/2016/12/07/04/30/soy-1888556_1280.jpg" alt="豆汁儿焦圈" class="card-image">
+                    <div class="card-content">
+			<h3 class="cn">豆汁儿焦圈</h3>
+                    	<h3 class="en">Douzhi'er with Jiaoquan</h3>
+                        <p class="cn">老北京传统小吃，豆汁儿酸香独特，搭配酥脆焦圈，风味十足。</p>
+                        <p class="en">Douzhi'er with Jiaoquan is a traditional snack of old Beijing. Douzhi'er (fermented soybean milk) has a unique sour and savory flavor, and when paired with crispy Jiaoquan (fried dough rings), it offers a rich, distinctive taste.</p>
+			<span class="more-link cn">了解更多 →</span>
+			<span class="more-link en">Learn more →</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+			<section id="culture">
+				<h2 class="cn">文化底蕴</h2>
+				<h2 class="en">Cultural Heritage</h2>
+				<p class="cn">
+					北京是中国文化的重要发源地之一，京剧、相声、景泰蓝工艺等都是北京文化的瑰宝。京剧被誉为"国粹"，集唱、念、做、打于一体，是中国影响最大的戏曲剧种。
+				</p>
+				<p class="cn">
+					北京的胡同和四合院是老北京民居文化的代表，南锣鼓巷、烟袋斜街等胡同保留了传统风貌，成为感受老北京生活气息的好去处。此外，北京拥有国家博物馆、故宫博物院等众多顶级文化场馆，是展示中国历史文化的重要窗口。
+				<p class="en">
+					Beijing is one of the important cradles of Chinese culture. Peking Opera, cross-talk, and cloisonné craftsmanship are all treasures of Beijing's culture. Known as the "quintessence of Chinese culture", Peking Opera integrates singing, recitation, acting, and acrobatics, and is the most influential traditional Chinese opera genre.
+				</p>
+				<p class="en">
+					Hutongs and siheyuan (quadrangle courtyards) in Beijing are representatives of the residential culture of old Beijing. Hutongs such as Nanluoguxiang and Yandai Xiejie have preserved their traditional style and become ideal places to experience the life atmosphere of old Beijing. In addition, Beijing has many top-tier cultural venues such as the National Museum of China and the Palace Museum, serving as important windows to showcase China's history and culture.
+				</p>
+				</p>
+
+			</section>
+
+			<section id="development">
+				<h2 class="cn">发展成就</h2>
+				<h2 class="en">Development Achievements</h2>
+				<p class="cn">
+					改革开放以来，北京发生了翻天覆地的变化。从奥运场馆"鸟巢""水立方"的建成，到中关村科技园区成为科技创新高地；从地铁网络的快速扩展，到城市副中心的规划建设，北京在城市建设、科技发展、生态保护等方面取得了举世瞩目的成就。
+				</p>
+				<p class="cn">
+					作为国际化大都市，北京不断提升开放水平，吸引着全球人才和企业前来发展，同时也在积极推进"四个中心"功能建设，努力建设成为国际一流的和谐宜居之都。
+				</p>
+				<p class="en">
+				Since the reform and opening-up policy, Beijing has undergone earth-shaking changes. From the completion of the Olympic venues "Bird's Nest" (National Stadium) and "Water Cube" (National Aquatics Center), to Zhongguancun Science and Technology Park becoming a highland for technological innovation; from the rapid expansion of the subway network to the planning and construction of the city's sub-center, Beijing has achieved world-renowned achievements in urban construction, technological development, ecological protection, and other fields.
+				</p>
+				<p class="en">
+				As an international metropolis, Beijing has continuously improved its level of openness, attracting global talents and enterprises to develop here. At the same time, it is actively promoting the construction of the "Four Centers" (political center, cultural center, international communication center, and sci-tech innovation center) and striving to build itself into a world-class, harmonious, and livable city.
+				</p>
+			</section>
+			</div>
+        <!-- 城市形象视频 -->
+        <section class="video-section animate-on-scroll">
+	    <div class="section-header">
+		<h2 class="cn">北京印象</h2>
+		<h2 class="en">Beijing Impressions</h2>
+	    </div>
+            
+		<video 
+			width="100%" 
+			height="500" 
+			controls
+			preload="metadata"
+			poster="" 
+			class="city-video"
+			title="北京城市形象宣传片">
+			<source src="https://sfj.beijing.gov.cn/eportal/immovableDir/sfj/resource/cms/2025/01/2025010215125138833.mp4" type="video/mp4">
+			您的浏览器不支持视频标签。
+		</video>
+		</div>
+		</div>
+	   </div>
+        </section>
+    </main>
+    
+	<!-- 广告位预留 -->
+	<div class="ad-section">
+	    <div class="ad-container" id="ad-footer">
+		<!-- 谷歌广告正确配置 -->
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1130777358854864" crossorigin="anonymous"></script>
+		<!-- bj-tour-pos -->
+		<ins class="adsbygoogle"
+		     style="display:block"
+		     data-ad-client="ca-pub-1130777358854864"
+		     data-ad-slot="5193848163"
+		     data-ad-format="auto"
+		     data-full-width-responsive="true"></ins>
+		<script>
+		     (adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	    </div>
+	</div>
+
+	<div class="ad-section">
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1130777358854864"
+		     crossorigin="anonymous"></script>
+		<ins class="adsbygoogle"
+		     style="display:block; text-align:center;"
+		     data-ad-layout="in-article"
+		     data-ad-format="fluid"
+		     data-ad-client="ca-pub-1130777358854864"
+		     data-ad-slot="4117141033"></ins>
+		<script>
+		     (adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	</div>
+    
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="cn">© 2025 北京城市介绍 | 探索这座城市的历史与未来</p>
+            <p class="en">© 2025 Beijing City Guide | Explore the history and future of the city</p>
+        </div>
+    </footer>
+    
+    <!-- 字体调节工具 -->
+    <div class="font-controls">
+        <button id="fontDecrease" class="font-btn">
+            <i class="fas fa-text-height"></i> A-
+        </button>
+        <button id="fontIncrease" class="font-btn">
+            <i class="fas fa-text-height"></i> A+
+        </button>
+    </div>
+    
+    <!-- 音频元素 -->
+    <audio id="backgroundMusic" loop>
+        <source src="assets/audio/bgm.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- 脚本 -->
+    <script src="assets/js/lang.js"></script>
+    <script src="assets/js/ui.js"></script>
+    <script src="assets/js/index.js"></script>
+</body>
+</html>
+    

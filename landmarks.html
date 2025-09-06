@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>北京 · 地标巡礼</title>
+	<meta name="description" content="北京必去15大地标全攻略：故宫、八达岭长城等历史古迹，鸟巢、CBD等现代地标，含开放时间、门票、交通路线，可切换地图查看位置。">
+    <meta name="keywords" content="北京地标,北京必去景点,故宫开放时间,八达岭长城交通,鸟巢门票,北京CBD,北京地标地图,北京旅游攻略">
+    <!-- 后续样式/脚本链接（如CSS、JS） -->
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 地标页面专属样式 */
+        .landmark-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .filter-btn {
+            padding: 0.6rem 1.2rem;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: var(--font-size-base);
+        }
+        
+        .filter-btn.active {
+            background: #c8102e;
+            color: white;
+        }
+        
+        .filter-btn:hover:not(.active) {
+            background: #e0e0e0;
+        }
+        
+        .landmark-map {
+            height: 500px;
+            margin: 2rem 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        #interactive-map {
+            height: 100%;
+            width: 100%;
+        }
+        
+        .landmark-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .landmark-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .landmark-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .landmark-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .landmark-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .landmark-card:hover .landmark-image img {
+            transform: scale(1.05);
+        }
+        
+        .landmark-info {
+            padding: 1.5rem;
+        }
+        
+        .landmark-name {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+        }
+        
+        .landmark-desc {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .landmark-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #999;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .landmark-category {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+        
+        .category-historical {
+            background: #f8e8e8;
+            color: #c8102e;
+        }
+        
+        .category-modern {
+            background: #e8f4f8;
+            color: #1572b6;
+        }
+        
+        .category-natural {
+            background: #e8f8ee;
+            color: #2e7d32;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 0.8rem;
+        }
+        
+        .show-guide, .navigate-btn {
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+        
+        .show-guide {
+            background: #f0f0f0;
+            color: #333;
+            flex: 1;
+        }
+        
+        .show-guide:hover {
+            background: #e0e0e0;
+        }
+        
+        .navigate-btn {
+            background: #c8102e;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .navigate-btn:hover {
+            background: #a90e26;
+        }
+        
+        .travel-guide {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: #f9f9f9;
+            padding: 0 1.5rem;
+        }
+        
+        .travel-guide.active {
+            max-height: 800px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+        
+        .guide-section {
+            margin-bottom: 1rem;
+        }
+        
+        .guide-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .guide-content {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .map-placeholder {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #f9f9f9;
+            color: #999;
+        }
+        
+        @media (max-width: 768px) {
+            .landmark-map {
+                height: 350px;
+            }
+            
+            .landmark-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏组件 -->
+    <header class="navbar">
+        <div class="logo">
+            <span class="cn">北京</span>
+            <span class="en">Beijing</span>
+        </div>
+        
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html" class="active cn">首页</a><a href="index.html" class="active en">Home</a></li>
+                <li><a href="history.html" class="cn">历史文化</a><a href="history.html" class="en">History</a></li>
+                <li><a href="modern.html" class="cn">现代发展</a><a href="modern.html" class="en">Modern</a></li>
+                <li><a href="landmarks.html" class="cn">地标巡礼</a><a href="landmarks.html" class="en">Landmarks</a></li>
+                <li><a href="travel-guide.html" class="cn">旅游攻略</a><a href="travel-guide.html" class="en">Tourist highway</a></li>
+                <li><a href="food.html" class="cn">饮食文化</a><a href="food.html" class="en">Food Culture</a></li>
+            </ul>
+        </nav>
+        
+        <div class="controls">
+            <!-- 语言切换按钮 -->
+            <button id="langToggle" class="control-btn">
+                <i class="fas fa-globe"></i>
+            </button>
+            
+            <!-- 音效开关 -->
+            <button id="audioToggle" class="control-btn">
+                <i class="fas fa-volume-mute"></i>
+            </button>
+            
+            <!-- 移动端菜单按钮 -->
+            <button id="menuToggle" class="control-btn mobile-only">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    
+    <!-- 移动端菜单 -->
+    <div id="mobileMenu" class="mobile-menu">
+        <ul>
+            <li><a href="index.html" class="cn">首页</a><a href="index.html" class="en">Home</a></li>
+            <li><a href="history.html" class="cn">历史文化</a><a href="history.html" class="en">History</a></li>
+            <li><a href="modern.html" class="cn">现代发展</a><a href="modern.html" class="en">Modern</a></li>
+            <li><a href="landmarks.html" class="cn">地标巡礼</a><a href="landmarks.html" class="en">Landmarks</a></li>
+	    <li><a href="travel-guide.html" class="cn">旅游攻略</a><a href="travel-guide.html" class="en">tourist highway</a></li>
+	    <li><a href="food.html" class="cn">饮食文化</a><a href="food.html" class="en">Food Culture</a></li>
+        </ul>
+    </div>
+    
+    <!-- 主内容区 -->
+    <main class="main-content">
+        <section class="page-header">
+            <h1 class="cn">北京地标巡礼</h1>
+            <h1 class="en">Beijing Landmarks Tour</h1>
+            <p class="cn">穿越时空，探索北京的标志性建筑</p>
+            <p class="en">Travel through time to explore Beijing's iconic buildings</p>
+        </section>
+        
+        <!-- 地标分类 -->
+        <section class="landmark-filters">
+            <button class="filter-btn active cn" data-filter="all">全部</button>
+            <button class="filter-btn active en" data-filter="all">All</button>
+            <button class="filter-btn cn" data-filter="historical">历史古迹</button>
+            <button class="filter-btn en" data-filter="historical">Historical</button>
+            <button class="filter-btn cn" data-filter="modern">现代建筑</button>
+            <button class="filter-btn en" data-filter="modern">Modern</button>
+            <button class="filter-btn cn" data-filter="natural">自然景观</button>
+            <button class="filter-btn en" data-filter="natural">Natural</button>
+        </section>
+        
+        <!-- 地标地图 -->
+        <section class="landmark-map">
+            <div id="interactive-map">
+                <!-- 交互式地图将在这里加载 -->
+                <div class="map-placeholder">
+                    <i class="fas fa-map-marker-alt fa-3x" style="margin-bottom: 1rem;"></i>
+                    <p class="cn">交互式地图加载中...</p>
+                    <p class="en">Loading interactive map...</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 地标列表 -->
+        <section class="landmark-list">
+            <div class="landmark-grid">
+                <!-- 历史古迹类 -->
+                <div class="landmark-card animate-on-scroll" data-category="historical">
+                    <div class="landmark-image">
+                        <img src="https://picsum.photos/id/1031/600/400" alt="故宫博物院外观" class="section-image">
+                    </div>
+                    <div class="landmark-info">
+                        <h3 class="landmark-name cn">故宫博物院</h3>
+                        <h3 class="landmark-name en">Forbidden City</h3>
+                        <div class="landmark-meta">
+                            <span class="landmark-category category-historical cn">历史古迹</span>
+                            <span class="landmark-category category-historical en">Historical</span>
+                        </div>
+                        <p class="landmark-desc cn">明清两代皇家宫殿，世界上现存规模最大、保存最为完整的木质结构古建筑之一，被誉为"紫禁城"。</p>
+                        <p class="landmark-desc en">Imperial palace of the Ming and Qing dynasties, one of the largest and best-preserved wooden structures in the world, known as the "Forbidden City."</p>
+                        <div class="action-buttons">
+                            <button class="show-guide cn">查看出行指南</button>
+                            <button class="show-guide en">Travel Guide</button>
+                            <button class="navigate-btn" data-lat="39.9163" data-lng="116.3907">
+                                <i class="fas fa-compass"></i>
+                            </button>
+                        </div>
+                        <div class="travel-guide">
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="far fa-clock"></i> 开放时间</h4>
+                                <h4 class="guide-title en"><i class="far fa-clock"></i> Opening Hours</h4>
+                                <p class="guide-content cn">4月1日-10月31日: 8:30-17:00（16:00停止入园）<br>11月1日-3月31日: 8:30-16:30（15:30停止入园）<br>周一闭馆（法定节假日除外）</p>
+                                <p class="guide-content en">April 1 - October 31: 8:30-17:00 (last entry 16:00)<br>November 1 - March 31: 8:30-16:30 (last entry 15:30)<br>Closed on Mondays (except public holidays)</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-ticket-alt"></i> 门票信息</h4>
+                                <h4 class="guide-title en"><i class="fas fa-ticket-alt"></i> Ticket Information</h4>
+                                <p class="guide-content cn">旺季（4-10月）: 60元/人<br>淡季（11-3月）: 40元/人<br>需提前在官网预约购票</p>
+                                <p class="guide-content en">Peak season (April-October): ¥60/person<br>Off season (November-March): ¥40/person<br>Advance booking required on official website</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-subway"></i> 交通方式</h4>
+                                <h4 class="guide-title en"><i class="fas fa-subway"></i> Transportation</h4>
+                                <p class="guide-content cn">地铁: 1号线"天安门东"或"天安门西"站下车<br>公交: 1、2、52、59、82路等至天安门站<br>自驾: 附近停车位有限，建议公共交通出行</p>
+                                <p class="guide-content en">Subway: Line 1, "Tiananmen East" or "Tiananmen West" Station<br>Bus: Routes 1, 2, 52, 59, 82 to Tiananmen Station<br>Driving: Limited parking nearby, public transport recommended</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="landmark-card animate-on-scroll" data-category="historical">
+                    <div class="landmark-image">
+                        <img src="https://picsum.photos/id/1057/600/400" alt="天坛公园祈年殿" class="section-image">
+                    </div>
+                    <div class="landmark-info">
+                        <h3 class="landmark-name cn">天坛公园</h3>
+                        <h3 class="landmark-name en">Temple of Heaven</h3>
+                        <div class="landmark-meta">
+                            <span class="landmark-category category-historical cn">历史古迹</span>
+                            <span class="landmark-category category-historical en">Historical</span>
+                        </div>
+                        <p class="landmark-desc cn">明清两代皇帝祭天、祈谷的场所，以其独特的建筑布局和象征意义闻名于世，是中国古代建筑艺术的杰出代表。</p>
+                        <p class="landmark-desc en">Where emperors of the Ming and Qing dynasties worshipped heaven and prayed for good harvests, famous for its unique architectural layout and symbolic significance, an outstanding representative of ancient Chinese architectural art.</p>
+                        <div class="action-buttons">
+                            <button class="show-guide cn">查看出行指南</button>
+                            <button class="show-guide en">Travel Guide</button>
+                            <button class="navigate-btn" data-lat="39.8823" data-lng="116.4194">
+                                <i class="fas fa-compass"></i>
+                            </button>
+                        </div>
+                        <div class="travel-guide">
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="far fa-clock"></i> 开放时间</h4>
+                                <h4 class="guide-title en"><i class="far fa-clock"></i> Opening Hours</h4>
+                                <p class="guide-content cn">公园: 6:00-22:00<br>景点: 8:00-17:30（4月1日-10月31日）<br>景点: 8:00-17:00（11月1日-3月31日）</p>
+                                <p class="guide-content en">Park: 6:00-22:00<br>Attractions: 8:00-17:30 (April 1 - October 31)<br>Attractions: 8:00-17:00 (November 1 - March 31)</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-ticket-alt"></i> 门票信息</h4>
+                                <h4 class="guide-title en"><i class="fas fa-ticket-alt"></i> Ticket Information</h4>
+                                <p class="guide-content cn">旺季（4-10月）: 15元（公园）+20元（景点联票）<br>淡季（11-3月）: 15元（公园）+15元（景点联票）</p>
+                                <p class="guide-content en">Peak season: ¥15 (park) + ¥20 (attractions combo)<br>Off season: ¥15 (park) + ¥15 (attractions combo)</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-subway"></i> 交通方式</h4>
+                                <h4 class="guide-title en"><i class="fas fa-subway"></i> Transportation</h4>
+                                <p class="guide-content cn">地铁: 5号线"天坛东门"站，8号线"天桥"站<br>公交: 2、20、36、53、71路等至天坛站</p>
+                                <p class="guide-content en">Subway: Line 5 "Tiantan East Gate", Line 8 "Tianqiao"<br>Bus: Routes 2, 20, 36, 53, 71 to Temple of Heaven</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="landmark-card animate-on-scroll" data-category="historical">
+                    <div class="landmark-image">
+                        <img src="https://picsum.photos/id/1056/600/400" alt="颐和园昆明湖与佛香阁" class="section-image">
+                    </div>
+                    <div class="landmark-info">
+                        <h3 class="landmark-name cn">颐和园</h3>
+                        <h3 class="landmark-name en">Summer Palace</h3>
+                        <div class="landmark-meta">
+                            <span class="landmark-category category-historical cn">历史古迹</span>
+                            <span class="landmark-category category-historical en">Historical</span>
+                        </div>
+                        <p class="landmark-desc cn">清代皇家园林，集中国江南园林和北方园林的特色于一体，是中国古典园林艺术的杰作，被列入《世界遗产名录》。</p>
+                        <p class="landmark-desc en">Qing dynasty royal garden combining features of southern and northern Chinese garden styles, a masterpiece of Chinese classical garden art, listed in the World Heritage List.</p>
+                        <div class="action-buttons">
+                            <button class="show-guide cn">查看出行指南</button>
+                            <button class="show-guide en">Travel Guide</button>
+                            <button class="navigate-btn" data-lat="39.9994" data-lng="116.2676">
+                                <i class="fas fa-compass"></i>
+                            </button>
+                        </div>
+                        <div class="travel-guide">
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="far fa-clock"></i> 开放时间</h4>
+                                <h4 class="guide-title en"><i class="far fa-clock"></i> Opening Hours</h4>
+                                <p class="guide-content cn">4月1日-10月31日: 6:30-18:00（17:00停止入园）<br>11月1日-3月31日: 7:00-17:00（16:00停止入园）</p>
+                                <p class="guide-content en">April 1 - October 31: 6:30-18:00 (last entry 17:00)<br>November 1 - March 31: 7:00-17:00 (last entry 16:00)</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-ticket-alt"></i> 门票信息</h4>
+                                <h4 class="guide-title en"><i class="fas fa-ticket-alt"></i> Ticket Information</h4>
+                                <p class="guide-content cn">旺季（4-10月）: 30元（公园）+60元（联票）<br>淡季（11-3月）: 20元（公园）+50元（联票）</p>
+                                <p class="guide-content en">Peak season: ¥30 (park) + ¥60 (combo ticket)<br>Off season: ¥20 (park) + ¥50 (combo ticket)</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-subway"></i> 交通方式</h4>
+                                <h4 class="guide-title en"><i class="fas fa-subway"></i> Transportation</h4>
+                                <p class="guide-content cn">地铁: 4号线"北宫门"站或"西苑"站<br>公交: 303、330、331、346、384路等至颐和园站</p>
+                                <p class="guide-content en">Subway: Line 4 "North Palace Gate" or "Xiyuan" Station<br>Bus: Routes 303, 330, 331, 346, 384 to Summer Palace</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="landmark-card animate-on-scroll" data-category="historical">
+                    <div class="landmark-image">
+                        <img src="https://picsum.photos/id/1059/600/400" alt="长城景色" class="section-image">
+                    </div>
+                    <div class="landmark-info">
+                        <h3 class="landmark-name cn">八达岭长城</h3>
+                        <h3 class="landmark-name en">Badaling Great Wall</h3>
+                        <div class="landmark-meta">
+                            <span class="landmark-category category-historical cn">历史古迹</span>
+                            <span class="landmark-category category-historical en">Historical</span>
+                        </div>
+                        <p class="landmark-desc cn">明长城中保存最好的一段，也是最具代表性的一段，是明代长城的精华，海拔高达1015米，城墙高7.8米，顶宽5米。</p>
+                        <p class="landmark-desc en">The best-preserved and most representative section of the Ming Dynasty Great Wall, the essence of the Ming Great Wall, with an altitude of 1015 meters, wall height 7.8 meters, top width 5 meters.</p>
+                        <div class="action-buttons">
+                            <button class="show-guide cn">查看出行指南</button>
+                            <button class="show-guide en">Travel Guide</button>
+                            <button class="navigate-btn" data-lat="40.2901" data-lng="116.0023">
+                                <i class="fas fa-compass"></i>
+                            </button>
+                        </div>
+                        <div class="travel-guide">
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="far fa-clock"></i> 开放时间</h4>
+                                <h4 class="guide-title en"><i class="far fa-clock"></i> Opening Hours</h4>
+                                <p class="guide-content cn">旺季（4-10月）: 6:30-19:00<br>淡季（11-3月）: 7:30-18:00</p>
+                                <p class="guide-content en">Peak season (April-October): 6:30-19:00<br>Off season (November-March): 7:30-18:00</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-ticket-alt"></i> 门票信息</h4>
+                                <h4 class="guide-title en"><i class="fas fa-ticket-alt"></i> Ticket Information</h4>
+                                <p class="guide-content cn">旺季（4-10月）: 40元/人<br>淡季（11-3月）: 35元/人<br>缆车/滑车: 单独收费</p>
+                                <p class="guide-content en">Peak season: ¥40/person<br>Off season: ¥35/person<br>Cable car/trolley: additional charge</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-subway"></i> 交通方式</h4>
+                                <h4 class="guide-title en"><i class="fas fa-subway"></i> Transportation</h4>
+                                <p class="guide-content cn">公交: 877路从德胜门直达<br>高铁: 北京北站至八达岭长城站<br>旅游专线: 前门、天安门等地有旅游巴士</p>
+                                <p class="guide-content en">Bus: Route 877 from Deshengmen directly<br>High-speed rail: Beijing North Station to Badaling Great Wall Station<br>Tourist bus: Available from Qianmen, Tiananmen and other locations</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="landmark-card animate-on-scroll" data-category="historical">
+                    <div class="landmark-image">
+                        <img src="https://picsum.photos/id/1060/600/400" alt="南锣鼓巷胡同" class="section-image">
+                    </div>
+                    <div class="landmark-info">
+                        <h3 class="landmark-name cn">南锣鼓巷</h3>
+                        <h3 class="landmark-name en">Nanluoguxiang</h3>
+                        <div class="landmark-meta">
+                            <span class="landmark-category category-historical cn">历史古迹</span>
+                            <span class="landmark-category category-historical en">Historical</span>
+                        </div>
+                        <p class="landmark-desc cn">北京最古老的街区之一，已有740多年的历史，是我国唯一完整保存着元代胡同院落肌理、规模最大、品级最高的棋盘式传统民居区。</p>
+                        <p class="landmark-desc en">One of Beijing's oldest neighborhoods with a history of over 740 years, the only completely preserved traditional residential area with Yuan Dynasty alley and courtyard texture, largest scale and highest grade.</p>
+                        <div class="action-buttons">
+                            <button class="show-guide cn">查看出行指南</button>
+                            <button class="show-guide en">Travel Guide</button>
+                            <button class="navigate-btn" data-lat="39.9386" data-lng="116.4012">
+                                <i class="fas fa-compass"></i>
+                            </button>
+                        </div>
+                        <div class="travel-guide">
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="far fa-clock"></i> 开放时间</h4>
+                                <h4 class="guide-title en"><i class="far fa-clock"></i> Opening Hours</h4>
+                                <p class="guide-content cn">全天开放（店铺一般10:00-22:00）</p>
+                                <p class="guide-content en">Open 24 hours (shops usually 10:00-22:00)</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-ticket-alt"></i> 门票信息</h4>
+                                <h4 class="guide-title en"><i class="fas fa-ticket-alt"></i> Ticket Information</h4>
+                                <p class="guide-content cn">免费开放</p>
+                                <p class="guide-content en">Free admission</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-subway"></i> 交通方式</h4>
+                                <h4 class="guide-title en"><i class="fas fa-subway"></i> Transportation</h4>
+                                <p class="guide-content cn">地铁: 6号线、8号线"南锣鼓巷"站<br>公交: 13、42、60、118路至锣鼓巷站</p>
+                                <p class="guide-content en">Subway: Lines 6 & 8, "Nanluoguxiang" Station<br>Bus: Routes 13, 42, 60, 118 to Luoguxiang Station</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="landmark-card animate-on-scroll" data-category="historical">
+                    <div class="landmark-image">
+                        <img src="https://picsum.photos/id/1062/600/400" alt="雍和宫建筑" class="section-image">
+                    </div>
+                    <div class="landmark-info">
+                        <h3 class="landmark-name cn">雍和宫</h3>
+                        <h3 class="landmark-name en">Yonghe Temple</h3>
+                        <div class="landmark-meta">
+                            <span class="landmark-category category-historical cn">历史古迹</span>
+                            <span class="landmark-category category-historical en">Historical</span>
+                        </div>
+                        <p class="landmark-desc cn">北京市内最大的藏传佛教寺院，建于清康熙年间，曾是雍正皇帝的府邸，乾隆皇帝的出生地，建筑融合了汉、满、蒙、藏等多种风格。</p>
+                        <p class="landmark-desc en">The largest Tibetan Buddhist temple in downtown Beijing, built during the Kangxi period of the Qing Dynasty, once the mansion of Emperor Yongzheng and birthplace of Emperor Qianlong, with architecture integrating Han, Manchu, Mongolian and Tibetan styles.</p>
+                        <div class="action-buttons">
+                            <button class="show-guide cn">查看出行指南</button>
+                            <button class="show-guide en">Travel Guide</button>
+                            <button class="navigate-btn" data-lat="39.9486" data-lng="116.4078">
+                                <i class="fas fa-compass"></i>
+                            </button>
+                        </div>
+                        <div class="travel-guide">
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="far fa-clock"></i> 开放时间</h4>
+                                <h4 class="guide-title en"><i class="far fa-clock"></i> Opening Hours</h4>
+                                <p class="guide-content cn">4月1日-10月31日: 9:00-17:00<br>11月1日-3月31日: 9:00-16:30<br>初一、十五及重大佛事活动日提前半小时开放</p>
+                                <p class="guide-content en">April 1 - October 31: 9:00-17:00<br>November 1 - March 31: 9:00-16:30<br>Opens 30 minutes early on 1st and 15th of lunar month and major Buddhist events</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-ticket-alt"></i> 门票信息</h4>
+                                <h4 class="guide-title en"><i class="fas fa-ticket-alt"></i> Ticket Information</h4>
+                                <p class="guide-content cn">25元/人，需提前预约</p>
+                                <p class="guide-content en">¥25/person, advance booking required</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-subway"></i> 交通方式</h4>
+                                <h4 class="guide-title en"><i class="fas fa-subway"></i> Transportation</h4>
+                                <p class="guide-content cn">地铁: 2号线、5号线"雍和宫"站<br>公交: 13、18、44、62、116路至雍和宫站</p>
+                                <p class="guide-content en">Subway: Lines 2 & 5, "Yonghegong" Station<br>Bus: Routes 13, 18, 44, 62, 116 to Yonghe Temple</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 现代建筑类 -->
+                <div class="landmark-card animate-on-scroll" data-category="modern">
+                    <div class="landmark-image">
+                        <img src="https://picsum.photos/id/1063/600/400" alt="国家体育场鸟巢" class="section-image">
+                    </div>
+                    <div class="landmark-info">
+                        <h3 class="landmark-name cn">国家体育场（鸟巢）</h3>
+                        <h3 class="landmark-name en">National Stadium (Bird's Nest)</h3>
+                        <div class="landmark-meta">
+                            <span class="landmark-category category-modern cn">现代建筑</span>
+                            <span class="landmark-category category-modern en">Modern</span>
+                        </div>
+                        <p class="landmark-desc cn">2008年奥运会主体育场，2022年冬奥会开闭幕式场地，独特的钢结构设计使其成为北京的新地标，可容纳91000名观众。</p>
+                        <p class="landmark-desc en">Main stadium of 2008 Olympics and opening/closing ceremony venue of 2022 Winter Olympics, its unique steel structure design makes it a new landmark of Beijing, with capacity of 91,000 spectators.</p>
+                        <div class="action-buttons">
+                            <button class="show-guide cn">查看出行指南</button>
+                            <button class="show-guide en">Travel Guide</button>
+                            <button class="navigate-btn" data-lat="39.9911" data-lng="116.3908">
+                                <i class="fas fa-compass"></i>
+                            </button>
+                        </div>
+                        <div class="travel-guide">
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="far fa-clock"></i> 开放时间</h4>
+                                <h4 class="guide-title en"><i class="far fa-clock"></i> Opening Hours</h4>
+                                <p class="guide-content cn">9:00-21:00（节假日可能延长）</p>
+                                <p class="guide-content en">9:00-21:00 (may be extended on holidays)</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-ticket-alt"></i> 门票信息</h4>
+                                <h4 class="guide-title en"><i class="fas fa-ticket-alt"></i> Ticket Information</h4>
+                                <p class="guide-content cn">50元/人，内部参观需另购门票</p>
+                                <p class="guide-content en">¥50/person, additional ticket required for internal visit</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-subway"></i> 交通方式</h4>
+                                <h4 class="guide-title en"><i class="fas fa-subway"></i> Transportation</h4>
+                                <p class="guide-content cn">地铁: 8号线、15号线"奥林匹克公园"站<br>公交: 82、419、538、645路至国家体育场站</p>
+                                <p class="guide-content en">Subway: Lines 8 & 15, "Olympic Park" Station<br>Bus: Routes 82, 419, 538, 645 to National Stadium</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="landmark-card animate-on-scroll" data-category="modern">
+                    <div class="landmark-image">
+                        <img src="https://picsum.photos/id/1064/600/400" alt="国家游泳中心水立方" class="section-image">
+                    </div>
+                    <div class="landmark-info">
+                        <h3 class="landmark-name cn">国家游泳中心（水立方）</h3>
+                        <h3 class="landmark-name en">National Aquatics Center (Water Cube)</h3>
+                        <div class="landmark-meta">
+                            <span class="landmark-category category-modern cn">现代建筑</span>
+                            <span class="landmark-category category-modern en">Modern</span>
+                        </div>
+                        <p class="landmark-desc cn">2008年奥运会游泳比赛场馆，2022年冬奥会冰壶比赛场地，独特的膜结构设计闻名世界，赛后改造为水上乐园和多功能场馆。</p>
+                        <p class="landmark-desc en">Swimming venue for 2008 Olympics and curling venue for 2022 Winter Olympics, famous for its unique membrane structure design, transformed into a water park and multi-functional venue after the games.</p>
+                        <div class="action-buttons">
+                            <button class="show-guide cn">查看出行指南</button>
+                            <button class="show-guide en">Travel Guide</button>
+                            <button class="navigate-btn" data-lat="39.9905" data-lng="116.3942">
+                                <i class="fas fa-compass"></i>
+                            </button>
+                        </div>
+                        <div class="travel-guide">
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="far fa-clock"></i> 开放时间</h4>
+                                <h4 class="guide-title en"><i class="far fa-clock"></i> Opening Hours</h4>
+                                <p class="guide-content cn">9:00-21:00（水上乐园10:00-18:00）</p>
+                                <p class="guide-content en">9:00-21:00 (Water park 10:00-18:00)</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-ticket-alt"></i> 门票信息</h4>
+                                <h4 class="guide-title en"><i class="fas fa-ticket-alt"></i> Ticket Information</h4>
+                                <p class="guide-content cn">30元/人（参观），水上乐园门票另计</p>
+                                <p class="guide-content en">¥30/person (visit), water park ticket separate</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-subway"></i> 交通方式</h4>
+                                <h4 class="guide-title en"><i class="fas fa-subway"></i> Transportation</h4>
+                                <p class="guide-content cn">地铁: 8号线、15号线"奥林匹克公园"站<br>公交: 510、82、81、86路至北辰西桥北站</p>
+                                <p class="guide-content en">Subway: Lines 8 & 15, "Olympic Park" Station<br>Bus: Routes 510, 82, 81, 86 to Beichen West Bridge North</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="landmark-card animate-on-scroll" data-category="modern">
+                    <div class="landmark-image">
+                        <img src="https://picsum.photos/id/1066/600/400" alt="北京CBD建筑群" class="section-image">
+                    </div>
+                    <div class="landmark-info">
+                        <h3 class="landmark-name cn">北京CBD</h3>
+                        <h3 class="landmark-name en">Beijing CBD</h3>
+                        <div class="landmark-meta">
+                            <span class="landmark-category category-modern cn">现代建筑</span>
+                            <span class="landmark-category category-modern en">Modern</span>
+                        </div>
+                        <p class="landmark-desc cn">北京中央商务区，汇集了国贸中心、中国尊、央视大楼等众多摩天大楼，是北京的金融、商业和国际商务中心，展现了北京现代化的一面。</p>
+                        <p class="landmark-desc en">Beijing Central Business District, gathering many skyscrapers such as China World Trade Center, CITIC Tower, CCTV Headquarters, serving as Beijing's financial, commercial and international business center, showing the modern side of Beijing.</p>
+                        <div class="action-buttons">
+                            <button class="show-guide cn">查看出行指南</button>
+                            <button class="show-guide en">Travel Guide</button>
+                            <button class="navigate-btn" data-lat="39.9047" data-lng="116.4651">
+                                <i class="fas fa-compass"></i>
+                            </button>
+                        </div>
+                        <div class="travel-guide">
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="far fa-clock"></i> 开放时间</h4>
+                                <h4 class="guide-title en"><i class="far fa-clock"></i> Opening Hours</h4>
+                                <p class="guide-content cn">商业区全天开放，办公楼和商场通常9:00-22:00</p>
+                                <p class="guide-content en">Business district open 24 hours, office buildings and malls usually 9:00-22:00</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-ticket-alt"></i> 门票信息</h4>
+                                <h4 class="guide-title en"><i class="fas fa-ticket-alt"></i> Ticket Information</h4>
+                                <p class="guide-content cn">公共区域免费，部分建筑内部参观需预约</p>
+                                <p class="guide-content en">Public areas free, some building interior visits require reservation</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-subway"></i> 交通方式</h4>
+                                <h4 class="guide-title en"><i class="fas fa-subway"></i> Transportation</h4>
+                                <p class="guide-content cn">地铁: 1号线、10号线"国贸"站，6号线、10号线"呼家楼"站<br>公交: 1、28、43、120、126路至国贸站</p>
+                                <p class="guide-content en">Subway: Lines 1 & 10 "China World" Station, Lines 6 & 10 "Hujialou" Station<br>Bus: Routes 1, 28, 43, 120, 126 to China World</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="landmark-card animate-on-scroll" data-category="modern">
+                    <div class="landmark-image">
+                        <img src="https://picsum.photos/id/1067/600/400" alt="中关村科技园区" class="section-image">
+                    </div>
+                    <div class="landmark-info">
+                        <h3 class="landmark-name cn">中关村科技园区</h3>
+                        <h3 class="landmark-name en">Zhongguancun Science Park</h3>
+                        <div class="landmark-meta">
+                            <span class="landmark-category category-modern cn">现代建筑</span>
+                            <span class="landmark-category category-modern en">Modern</span>
+                        </div>
+                        <p class="landmark-desc cn">中国第一个国家级高新技术产业开发区，被誉为"中国硅谷"，聚集了百度、联想、小米等众多高科技企业和研究机构。</p>
+                        <p class="landmark-desc en">China's first national high-tech industrial development zone, known as "China's Silicon Valley," gathering many high-tech enterprises and research institutions such as Baidu, Lenovo, Xiaomi.</p>
+                        <div class="action-buttons">
+                            <button class="show-guide cn">查看出行指南</button>
+                            <button class="show-guide en">Travel Guide</button>
+                            <button class="navigate-btn" data-lat="40.0094" data-lng="116.3147">
+                                <i class="fas fa-compass"></i>
+                            </button>
+                        </div>
+                        <div class="travel-guide">
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="far fa-clock"></i> 开放时间</h4>
+                                <h4 class="guide-title en"><i class="far fa-clock"></i> Opening Hours</h4>
+                                <p class="guide-content cn">园区全天开放，企业和机构通常9:00-18:00</p>
+                                <p class="guide-content en">Park open 24 hours, enterprises and institutions usually 9:00-18:00</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-ticket-alt"></i> 门票信息</h4>
+                                <h4 class="guide-title en"><i class="fas fa-ticket-alt"></i> Ticket Information</h4>
+                                <p class="guide-content cn">公共区域免费，企业参观需提前联系预约</p>
+                                <p class="guide-content en">Public areas free, enterprise visits require advance contact and reservation</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-subway"></i> 交通方式</h4>
+                                <h4 class="guide-title en"><i class="fas fa-subway"></i> Transportation</h4>
+                                <p class="guide-content cn">地铁: 4号线、10号线"海淀黄庄"站，13号线"五道口"站<br>公交: 307、320、332、608路至中关村南站</p>
+                                <p class="guide-content en">Subway: Lines 4 & 10 "Haidian Huangzhuang" Station, Line 13 "Wudaokou" Station<br>Bus: Routes 307, 320, 332, 608 to Zhongguancun South</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="landmark-card animate-on-scroll" data-category="modern">
+                    <div class="landmark-image">
+                        <img src="https://picsum.photos/id/1068/600/400" alt="北京大兴国际机场" class="section-image">
+                    </div>
+                    <div class="landmark-info">
+                        <h3 class="landmark-name cn">北京大兴国际机场</h3>
+                        <h3 class="landmark-name en">Beijing Daxing International Airport</h3>
+                        <div class="landmark-meta">
+                            <span class="landmark-category category-modern cn">现代建筑</span>
+                            <span class="landmark-category category-modern en">Modern</span>
+                        </div>
+                        <p class="landmark-desc cn">2019年投入使用的超大型国际航空枢纽，以其独特的"海星"造型成为新地标，是目前全球最大的单体航站楼之一，年旅客吞吐量设计能力达1亿人次。</p>
+                        <p class="landmark-desc en">A super-large international aviation hub put into use in 2019, with its unique "starfish" shape becoming a new landmark, one of the world's largest single terminal buildings, with a designed annual passenger throughput capacity of 100 million.</p>
+                        <div class="action-buttons">
+                            <button class="show-guide cn">查看出行指南</button>
+                            <button class="show-guide en">Travel Guide</button>
+                            <button class="navigate-btn" data-lat="39.5033" data-lng="116.4132">
+                                <i class="fas fa-compass"></i>
+                            </button>
+                        </div>
+                        <div class="travel-guide">
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="far fa-clock"></i> 开放时间</h4>
+                                <h4 class="guide-title en"><i class="far fa-clock"></i> Opening Hours</h4>
+                                <p class="guide-content cn">全天24小时开放</p>
+                                <p class="guide-content en">Open 24 hours a day</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-ticket-alt"></i> 门票信息</h4>
+                                <h4 class="guide-title en"><i class="fas fa-ticket-alt"></i> Ticket Information</h4>
+                                <p class="guide-content cn">接送机可进入，纯参观需遵守机场规定</p>
+                                <p class="guide-content en">Pick-up/drop-off allowed, pure visits subject to airport regulations</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-subway"></i> 交通方式</h4>
+                                <h4 class="guide-title en"><i class="fas fa-subway"></i> Transportation</h4>
+                                <p class="guide-content cn">地铁: 大兴机场线直达<br>高铁: 京雄城际铁路大兴机场站<br>机场大巴: 多条线路连接市区<br>自驾: 有机场高速和充足停车位</p>
+                                <p class="guide-content en">Subway: Daxing Airport Line direct<br>High-speed rail: Beijing-Xiong'an intercity railway Daxing Airport Station<br>Airport bus: Multiple routes connecting to urban area<br>Driving: Airport expressway and sufficient parking spaces</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 自然景观类 -->
+                <div class="landmark-card animate-on-scroll" data-category="natural">
+                    <div class="landmark-image">
+                        <img src="https://picsum.photos/id/1069/600/400" alt="香山公园红叶" class="section-image">
+                    </div>
+                    <div class="landmark-info">
+                        <h3 class="landmark-name cn">香山公园</h3>
+                        <h3 class="landmark-name en">Fragrant Hills Park</h3>
+                        <div class="landmark-meta">
+                            <span class="landmark-category category-natural cn">自然景观</span>
+                            <span class="landmark-category category-natural en">Natural</span>
+                        </div>
+                        <p class="landmark-desc cn">北京著名的皇家园林和避暑胜地，以秋季红叶闻名中外，海拔557米，园内林木繁茂，文物古迹众多，是市民休闲和登山的好去处。</p>
+                        <p class="landmark-desc en">Famous royal garden and summer resort in Beijing, renowned for autumn red leaves, 557 meters above sea level, with lush forests and numerous cultural relics, a good place for citizens' leisure and mountain climbing.</p>
+                        <div class="action-buttons">
+                            <button class="show-guide cn">查看出行指南</button>
+                            <button class="show-guide en">Travel Guide</button>
+                            <button class="navigate-btn" data-lat="39.9919" data-lng="116.1874">
+                                <i class="fas fa-compass"></i>
+                            </button>
+                        </div>
+                        <div class="travel-guide">
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="far fa-clock"></i> 开放时间</h4>
+                                <h4 class="guide-title en"><i class="far fa-clock"></i> Opening Hours</h4>
+                                <p class="guide-content cn">4月1日-11月15日: 6:00-18:30<br>11月16日-3月31日: 6:00-18:00</p>
+                                <p class="guide-content en">April 1 - November 15: 6:00-18:30<br>November 16 - March 31: 6:00-18:00</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-ticket-alt"></i> 门票信息</h4>
+                                <h4 class="guide-title en"><i class="fas fa-ticket-alt"></i> Ticket Information</h4>
+                                <p class="guide-content cn">旺季（4-11月）: 10元/人<br>淡季（12-3月）: 5元/人<br>碧云寺: 10元/人</p>
+                                <p class="guide-content en">Peak season (April-November): ¥10/person<br>Off season (December-March): ¥5/person<br>Biyun Temple: ¥10/person</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-subway"></i> 交通方式</h4>
+                                <h4 class="guide-title en"><i class="fas fa-subway"></i> Transportation</h4>
+                                <p class="guide-content cn">公交: 318、331、360、634、696路至香山公园站<br>地铁: 西郊线"香山"站</p>
+                                <p class="guide-content en">Bus: Routes 318, 331, 360, 634, 696 to Fragrant Hills Park<br>Subway: Western Suburban Line "Xiangshan" Station</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="landmark-card animate-on-scroll" data-category="natural">
+                    <div class="landmark-image">
+                        <img src="https://picsum.photos/id/1071/600/400" alt="奥林匹克森林公园" class="section-image">
+                    </div>
+                    <div class="landmark-info">
+                        <h3 class="landmark-name cn">奥林匹克森林公园</h3>
+                        <h3 class="landmark-name en">Olympic Forest Park</h3>
+                        <div class="landmark-meta">
+                            <span class="landmark-category category-natural cn">自然景观</span>
+                            <span class="landmark-category category-natural en">Natural</span>
+                        </div>
+                        <p class="landmark-desc cn">为2008年奥运会配套建设的大型城市公园，分为南园和北园，总面积680公顷，是北京城市中轴线的北延部分，也是市民休闲健身的理想场所。</p>
+                        <p class="landmark-desc en">Large urban park built for the 2008 Olympic Games, divided into South and North Gardens, with a total area of 680 hectares, the northern extension of Beijing's urban central axis, and an ideal place for citizens' leisure and fitness.</p>
+                        <div class="action-buttons">
+                            <button class="show-guide cn">查看出行指南</button>
+                            <button class="show-guide en">Travel Guide</button>
+                            <button class="navigate-btn" data-lat="40.0194" data-lng="116.3972">
+                                <i class="fas fa-compass"></i>
+                            </button>
+                        </div>
+                        <div class="travel-guide">
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="far fa-clock"></i> 开放时间</h4>
+                                <h4 class="guide-title en"><i class="far fa-clock"></i> Opening Hours</h4>
+                                <p class="guide-content cn">3月15日-11月15日: 6:00-21:00<br>11月16日-3月14日: 7:00-20:00</p>
+                                <p class="guide-content en">March 15 - November 15: 6:00-21:00<br>November 16 - March 14: 7:00-20:00</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-ticket-alt"></i> 门票信息</h4>
+                                <h4 class="guide-title en"><i class="fas fa-ticket-alt"></i> Ticket Information</h4>
+                                <p class="guide-content cn">免费开放</p>
+                                <p class="guide-content en">Free admission</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-subway"></i> 交通方式</h4>
+                                <h4 class="guide-title en"><i class="fas fa-subway"></i> Transportation</h4>
+                                <p class="guide-content cn">地铁: 8号线、15号线"奥林匹克公园"站或"森林公园南门"站<br>公交: 311、379、484、628路至森林公园站</p>
+                                <p class="guide-content en">Subway: Lines 8 & 15 "Olympic Park" or "Forest Park South Gate" Station<br>Bus: Routes 311, 379, 484, 628 to Forest Park</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="landmark-card animate-on-scroll" data-category="natural">
+                    <div class="landmark-image">
+                        <img src="https://picsum.photos/id/1072/600/400" alt="北海公园白塔" class="section-image">
+                    </div>
+                    <div class="landmark-info">
+                        <h3 class="landmark-name cn">北海公园</h3>
+                        <h3 class="landmark-name en">Beihai Park</h3>
+                        <div class="landmark-meta">
+                            <span class="landmark-category category-natural cn">自然景观</span>
+                            <span class="landmark-category category-natural en">Natural</span>
+                        </div>
+                        <p class="landmark-desc cn">始建于辽代的皇家园林，已有近千年历史，以北海为中心，琼华岛上有标志性的白塔，是中国现存历史最悠久、保存最完整的皇家园林之一。</p>
+                        <p class="landmark-desc en">Royal garden founded in the Liao Dynasty with a history of nearly a thousand years, centered on Beihai Lake, with the iconic White Pagoda on Qionghua Island, one of the oldest and best-preserved royal gardens in China.</p>
+                        <div class="action-buttons">
+                            <button class="show-guide cn">查看出行指南</button>
+                            <button class="show-guide en">Travel Guide</button>
+                            <button class="navigate-btn" data-lat="39.9236" data-lng="116.3894">
+                                <i class="fas fa-compass"></i>
+                            </button>
+                        </div>
+                        <div class="travel-guide">
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="far fa-clock"></i> 开放时间</h4>
+                                <h4 class="guide-title en"><i class="far fa-clock"></i> Opening Hours</h4>
+                                <p class="guide-content cn">4月1日-10月31日: 6:30-21:00（19:30停止入园）<br>11月1日-3月31日: 6:30-20:00（18:30停止入园）</p>
+                                <p class="guide-content en">April 1 - October 31: 6:30-21:00 (last entry 19:30)<br>November 1 - March 31: 6:30-20:00 (last entry 18:30)</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-ticket-alt"></i> 门票信息</h4>
+                                <h4 class="guide-title en"><i class="fas fa-ticket-alt"></i> Ticket Information</h4>
+                                <p class="guide-content cn">旺季（4-10月）: 10元/人<br>淡季（11-3月）: 5元/人<br>园中园景点另收费</p>
+                                <p class="guide-content en">Peak season (April-October): ¥10/person<br>Off season (November-March): ¥5/person<br>Additional charges for garden-in-garden attractions</p>
+                            </div>
+                            <div class="guide-section">
+                                <h4 class="guide-title cn"><i class="fas fa-subway"></i> 交通方式</h4>
+                                <h4 class="guide-title en"><i class="fas fa-subway"></i> Transportation</h4>
+                                <p class="guide-content cn">地铁: 6号线"北海北"站，8号线"什刹海"站<br>公交: 101、103、109、124、685路至北海公园站</p>
+                                <p class="guide-content en">Subway: Line 6 "Beihai North" Station, Line 8 "Shichahai" Station<br>Bus: Routes 101, 103, 109, 124, 685 to Beihai Park</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- 广告位预留 -->
+    <div class="ad-section">
+        <div class="ad-container" id="ad-responsive">
+            <!-- 谷歌广告将在这里插入 -->
+            <div class="ad-placeholder">广告位</div>
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1130777358854864"
+		     crossorigin="anonymous"></script>
+		<!-- bj-tour-pos -->
+		<ins class="adsbygoogle"
+		     style="display:block"
+		     data-ad-client="ca-pub-1130777358854864"
+		     data-ad-slot="5193848163"
+		     data-ad-format="auto"
+		     data-full-width-responsive="true"></ins>
+		<script>
+		     (adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="cn">© 2025 北京城市介绍 | 探索这座城市的历史与未来</p>
+            <p class="en">© 2025 Beijing City Guide | Explore the history and future of the city</p>
+        </div>
+    </footer>
+    
+    <!-- 字体调节工具 -->
+    <div class="font-controls">
+        <button id="fontDecrease" class="font-btn">
+            <i class="fas fa-text-height"></i> A-
+        </button>
+        <button id="fontIncrease" class="font-btn">
+            <i class="fas fa-text-height"></i> A+
+        </button>
+    </div>
+    
+    <!-- 音频元素 -->
+    <audio id="backgroundMusic" loop>
+        <source src="assets/audio/bgm.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- 脚本 -->
+    <script src="assets/js/lang.js"></script>
+    <script src="assets/js/ui.js"></script>
+    <script src="assets/js/landmarks.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</body>
+</html>

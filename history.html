@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+        <title>北京 · 历史文化</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="北京历史文化介绍，三千年建城史的文明积淀">
+    <meta name="description" content="探索北京历史：从元大都到明清紫禁城，解读天坛、颐和园等世界遗产的建筑艺术，感受京剧、胡同文化等老北京传统魅力，追溯千年古都文脉。">
+    <meta name="keywords" content="北京,历史文化,古都,时间轴,皇家建筑,北京历史文化,北京古都变迁,故宫博物院,天坛公园,颐和园,北京京剧,胡同文化,北京世界遗产">
+    <!-- 后续样式/脚本链接（如CSS、JS） -->
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏组件 -->
+    <header class="navbar">
+        <div class="logo">
+            <span class="cn">北京</span>
+            <span class="en">Beijing</span>
+        </div>
+        
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html" class="active cn">首页</a><a href="index.html" class="active en">Home</a></li>
+                <li><a href="history.html" class="cn">历史文化</a><a href="history.html" class="en">History</a></li>
+                <li><a href="modern.html" class="cn">现代发展</a><a href="modern.html" class="en">Modern</a></li>
+                <li><a href="landmarks.html" class="cn">地标巡礼</a><a href="landmarks.html" class="en">Landmarks</a></li>
+                <li><a href="travel-guide.html" class="cn">旅游攻略</a><a href="travel-guide.html" class="en">tourist highway</a></li>
+                <li><a href="food.html" class="cn">饮食文化</a><a href="food.html" class="en">Food Culture</a></li>
+            </ul>
+        </nav>
+        
+        <div class="controls">
+            <!-- 语言切换按钮 -->
+            <button id="langToggle" class="control-btn">
+                <i class="fas fa-globe"></i>
+            </button>
+            
+            <!-- 音效开关 -->
+            <button id="audioToggle" class="control-btn">
+                <i class="fas fa-volume-mute"></i>
+            </button>
+            
+            <!-- 移动端菜单按钮 -->
+            <button id="menuToggle" class="control-btn mobile-only">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    
+    <!-- 移动端菜单 -->
+    <div id="mobileMenu" class="mobile-menu">
+        <ul>
+            <li><a href="index.html" class="cn">首页</a><a href="index.html" class="en">Home</a></li>
+            <li><a href="history.html" class="cn">历史文化</a><a href="history.html" class="en">History</a></li>
+            <li><a href="modern.html" class="cn">现代发展</a><a href="modern.html" class="en">Modern</a></li>
+            <li><a href="landmarks.html" class="cn">地标巡礼</a><a href="landmarks.html" class="en">Landmarks</a></li>
+	    <li><a href="travel-guide.html" class="cn">旅游攻略</a><a href="travel-guide.html" class="en">tourist highway</a></li>
+	    <li><a href="food.html" class="cn">饮食文化</a><a href="food.html" class="en">Food Culture</a></li>
+        </ul>
+    </div>
+    
+    <!-- 主内容区 -->
+    <main class="main-content">
+        <section class="page-header">
+            <h1 class="cn">北京历史文化</h1>
+            <h1 class="en">Beijing's History & Culture</h1>
+            <p class="cn">三千年建城史的文明积淀</p>
+            <p class="en">Civilization accumulation over 3,000 years of urban history</p>
+        </section>
+        
+        <!-- 历史时间轴 -->
+        <section class="timeline-section animate-on-scroll">
+            <div class="section-header">
+                <h2 class="cn">古都变迁</h2>
+                <h2 class="en">Ancient Capital Evolution</h2>
+            </div>
+            
+            <div class="timeline-container">
+                <div class="timeline-track">
+                    <!-- 时间点1：先秦时期 -->
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-date">
+                            <span class="cn">公元前1045年</span>
+                            <span class="en">1045 BCE</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3 class="cn">蓟城建立</h3>
+                            <h3 class="en">Ji City Established</h3>
+                            <p class="cn">北京地区最早的城市，西周时期燕国都城，奠定了北京城市发展的基础。</p>
+                            <p class="en">The earliest city in the Beijing area, capital of the Yan State during the Western Zhou Dynasty, laying the foundation for Beijing's urban development.</p>
+                            <img src="https://picsum.photos/id/1040/600/400" alt="蓟城遗址想象图" class="timeline-image">
+                        </div>
+                    </div>
+                    
+                    <!-- 时间点2：辽金时期 -->
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-date">
+                            <span class="cn">938年</span>
+                            <span class="en">938 CE</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3 class="cn">辽南京与金中都</h3>
+                            <h3 class="en">Liao Nanjing & Jin Zhongdu</h3>
+                            <p class="cn">辽朝将北京定为南京，金朝将其改为中都，北京首次成为王朝都城。</p>
+                            <p class="en">The Liao Dynasty designated Beijing as Nanjing, and the Jin Dynasty renamed it Zhongdu, making Beijing a dynastic capital for the first time.</p>
+                            <img src="https://picsum.photos/id/1041/600/400" alt="金中都遗址" class="timeline-image">
+                        </div>
+                    </div>
+                    
+                    <!-- 时间点3：元朝 -->
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-date">
+                            <span class="cn">1271年</span>
+                            <span class="en">1271 CE</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3 class="cn">元大都</h3>
+                            <h3 class="en">Yuan Dadu</h3>
+                            <p class="cn">忽必烈建立元朝，定都大都，奠定了现代北京城市格局的基础。</p>
+                            <p class="en">Kublai Khan established the Yuan Dynasty with Dadu as its capital, laying the foundation for modern Beijing's urban layout.</p>
+                            <img src="https://picsum.photos/id/1042/600/400" alt="元大都遗址公园" class="timeline-image">
+                        </div>
+                    </div>
+                    
+                    <!-- 时间点4：明朝 -->
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-date">
+                            <span class="cn">1421年</span>
+                            <span class="en">1421 CE</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3 class="cn">明北京城</h3>
+                            <h3 class="en">Ming Beijing</h3>
+                            <p class="cn">明成祖朱棣迁都北京，建造紫禁城，形成"凸"字形城市格局，基本确定了北京的城市轮廓。</p>
+                            <p class="en">Emperor Yongle moved the capital to Beijing and built the Forbidden City, forming a "convex" shaped urban layout that basically determined Beijing's urban outline.</p>
+                            <img src="https://picsum.photos/id/1043/600/400" alt="明代北京城地图" class="timeline-image">
+                        </div>
+                    </div>
+                    
+                    <!-- 时间点5：清朝 -->
+                    <div class="timeline-item animate-on-scroll">
+                        <div class="timeline-date">
+                            <span class="cn">1644年</span>
+                            <span class="en">1644 CE</span>
+                        </div>
+                        <div class="timeline-content">
+                            <h3 class="cn">清承明制</h3>
+                            <h3 class="en">Qing Dynasty Continuation</h3>
+                            <p class="cn">清朝入关后沿用北京城，修建了圆明园、颐和园等皇家园林，形成了今日所见的北京历史风貌。</p>
+                            <p class="en">After entering the Shanhai Pass, the Qing Dynasty continued to use Beijing as its capital, building imperial gardens such as Yuanmingyuan and the Summer Palace, forming the historical style of Beijing seen today.</p>
+                            <img src="https://picsum.photos/id/1044/600/400" alt="清代北京颐和园" class="timeline-image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 皇家建筑 -->
+        <section class="royal-architecture animate-on-scroll">
+            <div class="section-header">
+                <h2 class="cn">皇家建筑</h2>
+                <h2 class="en">Royal Architecture</h2>
+            </div>
+            
+            <div class="architecture-grid">
+                <!-- 故宫 -->
+                <div class="architecture-card animate-on-scroll">
+                    <img src="https://picsum.photos/id/1045/800/600" alt="故宫博物院" class="architecture-image">
+                    <h3 class="cn">故宫博物院</h3>
+                    <h3 class="en">Forbidden City</h3>
+                    <p class="cn">明清两代皇家宫殿，世界上现存规模最大、保存最为完整的木质结构古建筑之一，被誉为"紫禁城"。</p>
+                    <p class="en">Imperial palace of the Ming and Qing dynasties, one of the largest and best-preserved wooden structures in the world, known as the "Forbidden City."</p>
+                    <a href="landmarks.html#forbidden-city" class="cn more-link">了解更多</a>
+                    <a href="landmarks.html#forbidden-city" class="en more-link">Learn more</a>
+                </div>
+                
+                <!-- 天坛 -->
+                <div class="architecture-card animate-on-scroll">
+                    <img src="https://picsum.photos/id/1046/800/600" alt="天坛公园" class="architecture-image">
+                    <h3 class="cn">天坛公园</h3>
+                    <h3 class="en">Temple of Heaven</h3>
+                    <p class="cn">明清两代皇帝祭天、祈谷的场所，以其独特的建筑布局和象征意义闻名于世。</p>
+                    <p class="en">Where emperors of the Ming and Qing dynasties worshipped heaven and prayed for good harvests, famous for its unique architectural layout and symbolic significance.</p>
+                    <a href="landmarks.html#temple-of-heaven" class="cn more-link">了解更多</a>
+                    <a href="landmarks.html#temple-of-heaven" class="en more-link">Learn more</a>
+                </div>
+                
+                <!-- 颐和园 -->
+                <div class="architecture-card animate-on-scroll">
+                    <img src="https://picsum.photos/id/1047/800/600" alt="颐和园" class="architecture-image">
+                    <h3 class="cn">颐和园</h3>
+                    <h3 class="en">Summer Palace</h3>
+                    <p class="cn">清代皇家园林，集中国江南园林和北方园林的特色于一体，是中国古典园林艺术的杰作。</p>
+                    <p class="en">Qing dynasty royal garden combining features of southern and northern Chinese garden styles, a masterpiece of Chinese classical garden art.</p>
+                    <a href="landmarks.html#summer-palace" class="cn more-link">了解更多</a>
+                    <a href="landmarks.html#summer-palace" class="en more-link">Learn more</a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 传统艺术 -->
+        <section class="traditional-arts animate-on-scroll">
+            <div class="section-header">
+                <h2 class="cn">传统艺术与文化</h2>
+                <h2 class="en">Traditional Arts & Culture</h2>
+            </div>
+            
+            <div class="arts-container">
+                <div class="art-item animate-on-scroll">
+                    <img src="https://picsum.photos/id/1048/600/400" alt="京剧表演" class="art-image">
+                    <div class="art-content">
+                        <h3 class="cn">京剧</h3>
+                        <h3 class="en">Peking Opera</h3>
+                        <p class="cn">中国五大戏曲剧种之一，形成于北京，集唱、念、做、打于一体，被誉为"国粹"。</p>
+                        <p class="en">One of China's five major opera genres, formed in Beijing, integrating singing, recitation, acting, and acrobatics, known as the "national essence."</p>
+                    </div>
+                </div>
+                
+                <div class="art-item animate-on-scroll">
+                    <img src="https://picsum.photos/id/1049/600/400" alt="相声表演" class="art-image">
+                    <div class="art-content">
+                        <h3 class="cn">相声</h3>
+                        <h3 class="en">Cross-talk</h3>
+                        <p class="cn">北京特色民间艺术，以幽默讽刺为特点，通过对话形式表演，深受大众喜爱。</p>
+                        <p class="en">Beijing's characteristic folk art, featuring humor and satire, performed through dialogue, deeply loved by the public.</p>
+                    </div>
+                </div>
+                
+                <div class="art-item animate-on-scroll">
+                    <img src="https://picsum.photos/id/1050/600/400" alt="胡同文化" class="art-image">
+                    <div class="art-content">
+                        <h3 class="cn">胡同文化</h3>
+                        <h3 class="en">Hutong Culture</h3>
+                        <p class="cn">北京独特的城市肌理，狭窄的巷道连接着传统四合院，是老北京生活方式的缩影。</p>
+                        <p class="en">Beijing's unique urban texture, with narrow lanes connecting traditional courtyard houses, a microcosm of old Beijing's lifestyle.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- 广告位预留 -->
+    <div class="ad-section">
+        <div class="ad-container" id="ad-sidebar">
+            <!-- 谷歌广告将在这里插入 -->
+            <div class="ad-placeholder">广告位</div>
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1130777358854864"
+		     crossorigin="anonymous"></script>
+		<!-- bj-tour-pos -->
+		<ins class="adsbygoogle"
+		     style="display:block"
+		     data-ad-client="ca-pub-1130777358854864"
+		     data-ad-slot="5193848163"
+		     data-ad-format="auto"
+		     data-full-width-responsive="true"></ins>
+		<script>
+		     (adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="cn">© 2025 北京城市介绍 | 探索这座城市的历史与未来</p>
+            <p class="en">© 2025 Beijing City Guide | Explore the history and future of the city</p>
+        </div>
+    </footer>
+    
+    <!-- 字体调节工具 -->
+    <div class="font-controls">
+        <button id="fontDecrease" class="font-btn">
+            <i class="fas fa-text-height"></i> A-
+        </button>
+        <button id="fontIncrease" class="font-btn">
+            <i class="fas fa-text-height"></i> A+
+        </button>
+    </div>
+    
+    <!-- 音频元素 -->
+    <audio id="backgroundMusic" loop>
+        <source src="assets/audio/bgm.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- 脚本 -->
+    <script src="assets/js/lang.js"></script>
+    <script src="assets/js/ui.js"></script>
+    <script src="assets/js/history.js"></script>
+</body>
+</html>

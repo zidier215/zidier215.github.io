@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>北京 · 现代发展</title>
+    <meta name="description" content="2025北京现代发展报告：中关村3.2万家高新企业领跑，大兴机场联通全球，冬奥会场馆再利用，数字经济规模达4.8万亿，见证创新之都实力。">
+    <meta name="keywords" content="北京现代发展2025,中关村科技园区,北京冬奥会遗产,北京数字经济,大兴国际机场,北京高新企业,首钢园转型">
+    <!-- 后续样式/脚本链接（如CSS、JS） -->
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 现代布局增强样式 */
+        .content-section {
+            margin-bottom: 4rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .section-header {
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        .section-header::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 4px;
+            background-color: #c8102e;
+            border-radius: 2px;
+        }
+        
+        .section-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            align-items: center;
+        }
+        
+        @media (max-width: 768px) {
+            .section-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .reverse-layout {
+                display: flex;
+                flex-direction: column-reverse;
+            }
+            
+            .content-section {
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+            }
+            
+            .stat-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .stat-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 4px solid #c8102e;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #c8102e;
+            margin: 0.5rem 0;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        .image-comparison {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .chart-container {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .chart-wrapper {
+            height: 400px;
+            margin-top: 1rem;
+        }
+        
+        .video-container {
+            margin-top: 2rem;
+        }
+        
+        .video-wrapper {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .innovation-themes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .theme-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .theme-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .theme-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .theme-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .theme-card:hover .theme-image img {
+            transform: scale(1.05);
+        }
+        
+        .theme-content {
+            padding: 1.5rem;
+        }
+        
+        .theme-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        
+        /* 动画效果增强 */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .animate-on-scroll.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 冬奥会板块特殊样式 */
+        .winter-olympics {
+            border-top: 4px solid #1572b6;
+        }
+        
+        .winter-olympics .section-header::after {
+            background-color: #1572b6;
+        }
+        
+        .fact-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .fact-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border-top: 4px solid #1572b6;
+        }
+        
+        .fact-icon {
+            font-size: 2rem;
+            color: #1572b6;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏组件 -->
+    <header class="navbar">
+        <div class="logo">
+            <span class="cn">北京</span>
+            <span class="en">Beijing</span>
+        </div>
+        
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html" class="active cn">首页</a><a href="index.html" class="active en">Home</a></li>
+                <li><a href="history.html" class="cn">历史文化</a><a href="history.html" class="en">History</a></li>
+                <li><a href="modern.html" class="cn">现代发展</a><a href="modern.html" class="en">Modern</a></li>
+                <li><a href="landmarks.html" class="cn">地标巡礼</a><a href="landmarks.html" class="en">Landmarks</a></li>
+                <li><a href="travel-guide.html" class="cn">旅游攻略</a><a href="travel-guide.html" class="en">tourist highway</a></li>
+                <li><a href="food.html" class="cn">饮食文化</a><a href="food.html" class="en">Food Culture</a></li>
+            </ul>
+        </nav>
+        
+        <div class="controls">
+            <!-- 语言切换按钮 -->
+            <button id="langToggle" class="control-btn">
+                <i class="fas fa-globe"></i>
+            </button>
+            
+            <!-- 音效开关 -->
+            <button id="audioToggle" class="control-btn">
+                <i class="fas fa-volume-mute"></i>
+            </button>
+            
+            <!-- 移动端菜单按钮 -->
+            <button id="menuToggle" class="control-btn mobile-only">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    
+    <!-- 移动端菜单 -->
+    <div id="mobileMenu" class="mobile-menu">
+        <ul>
+			<li><a href="index.html" class="active cn">首页</a><a href="index.html" class="active en">Home</a></li>
+			<li><a href="history.html" class="cn">历史文化</a><a href="history.html" class="en">History</a></li>
+			<li><a href="modern.html" class="cn">现代发展</a><a href="modern.html" class="en">Modern</a></li>
+			<li><a href="landmarks.html" class="cn">地标巡礼</a><a href="landmarks.html" class="en">Landmarks</a></li>
+			<li><a href="travel-guide.html" class="cn">旅游攻略</a><a href="travel-guide.html" class="en">tourist highway</a></li>
+			<li><a href="food.html" class="cn">饮食文化</a><a href="food.html" class="en">Food Culture</a></li>
+        </ul>
+    </div>
+    
+    <!-- 主内容区 -->
+    <main class="main-content">
+        <section class="page-header">
+            <h1 class="cn">北京现代发展</h1>
+            <h1 class="en">Beijing's Modern Development</h1>
+            <p class="cn">创新驱动的国际化大都市</p>
+            <p class="en">An international metropolis driven by innovation</p>
+        </section>
+        
+        <!-- 创新数据概览 -->
+        <section class="content-section animate-on-scroll">
+            <div class="section-header">
+                <h2 class="cn">2025年北京创新实力概览</h2>
+                <h2 class="en">Beijing's Innovation Strength Overview 2025</h2>
+            </div>
+            
+            <div class="stat-cards">
+                <div class="stat-card">
+                    <div class="stat-label cn">高新技术企业数量</div>
+                    <div class="stat-label en">Number of High-tech Enterprises</div>
+                    <div class="stat-value">3.2万+</div>
+                    <div class="stat-desc cn">五年增长率18.5%</div>
+                    <div class="stat-desc en">5-year growth rate 18.5%</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label cn">研发投入占比</div>
+                    <div class="stat-label en">R&D Investment Ratio</div>
+                    <div class="stat-value">7.3%</div>
+                    <div class="stat-desc cn">全国平均水平的3.2倍</div>
+                    <div class="stat-desc en">3.2x national average</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label cn">独角兽企业数量</div>
+                    <div class="stat-label en">Number of Unicorn Enterprises</div>
+                    <div class="stat-value">118家</div>
+                    <div class="stat-desc cn">占全球总量15.2%</div>
+                    <div class="stat-desc en">15.2% of global total</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-label cn">数字经济规模</div>
+                    <div class="stat-label en">Digital Economy Scale</div>
+                    <div class="stat-value">4.8万亿</div>
+                    <div class="stat-desc cn">占GDP比重42.3%</div>
+                    <div class="stat-desc en">42.3% of GDP</div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 科技高地板块 -->
+        <section class="content-section animate-on-scroll">
+            <div class="section-header">
+                <h2 class="cn">科技创新高地</h2>
+                <h2 class="en">Technology Innovation Hub</h2>
+            </div>
+            
+            <div class="section-content">
+                <div class="text-content">
+                    <p class="cn">北京作为中国科技创新的核心引擎，持续领跑全国创新发展。中关村国家自主创新示范区已形成"一区多园"的空间布局，聚集了全国35%的人工智能企业和40%的量子信息企业。</p>
+                    <p class="en">As China's core engine of technological innovation, Beijing continues to lead the country's innovative development. Zhongguancun National Innovation Demonstration Zone has formed a "one district, multiple parks" spatial layout, gathering 35% of the country's artificial intelligence enterprises and 40% of quantum information enterprises.</p>
+                    
+                    <p class="cn">2025年，北京在大模型、自动驾驶、脑科学、量子计算等前沿领域取得重大突破，百度Apollo已实现L4级自动驾驶商业化运营，字节跳动"豆包"大模型参数规模突破万亿，在多语言理解和生成领域达到世界领先水平。</p>
+                    <p class="en">In 2025, Beijing has made significant breakthroughs in cutting-edge fields such as large models, autonomous driving, brain science, and quantum computing. Baidu Apollo has achieved commercial operation of L4 autonomous driving, while ByteDance's "Doubao" large model has exceeded one trillion parameters, reaching world-leading levels in multilingual understanding and generation.</p>
+                </div>
+                
+                <div class="image-content">
+                    <img src="https://picsum.photos/id/180/800/600" alt="中关村科技园区现代建筑群" class="section-image">
+                    <p class="image-caption cn">中关村科学城——全球创新资源聚集地</p>
+                    <p class="image-caption en">Zhongguancun Science City - Global innovation resource gathering place</p>
+                </div>
+            </div>
+            
+            <!-- 重点创新领域 -->
+            <div class="innovation-themes">
+                <div class="theme-card">
+                    <div class="theme-image">
+                        <img src="https://picsum.photos/id/160/600/400" alt="人工智能创新" class="section-image">
+                    </div>
+                    <div class="theme-content">
+                        <h3 class="theme-title cn">人工智能</h3>
+                        <h3 class="theme-title en">Artificial Intelligence</h3>
+                        <p class="cn">北京人工智能核心产业规模突破5000亿元，形成从基础研究到产业应用的完整生态链</p>
+                        <p class="en">Beijing's core AI industry scale exceeds 500 billion yuan, forming a complete ecological chain from basic research to industrial application</p>
+                    </div>
+                </div>
+                
+                <div class="theme-card">
+                    <div class="theme-image">
+                        <img src="https://picsum.photos/id/119/600/400" alt="数字经济创新" class="section-image">
+                    </div>
+                    <div class="theme-content">
+                        <h3 class="theme-title cn">数字经济</h3>
+                        <h3 class="theme-title en">Digital Economy</h3>
+                        <p class="cn">建设全球数字经济标杆城市，5G基站数量突破6万个，实现重点区域全覆盖</p>
+                        <p class="en">Building a global benchmark city for digital economy, with 60,000+ 5G base stations, achieving full coverage in key areas</p>
+                    </div>
+                </div>
+                
+                <div class="theme-card">
+                    <div class="theme-image">
+                        <img src="https://picsum.photos/id/251/600/400" alt="绿色能源创新" class="section-image">
+                    </div>
+                    <div class="theme-content">
+                        <h3 class="theme-title cn">绿色能源</h3>
+                        <h3 class="theme-title en">Green Energy</h3>
+                        <p class="cn">可再生能源占比提升至18%，新能源汽车保有量突破100万辆，充电设施覆盖率95%</p>
+                        <p class="en">Renewable energy accounts for 18%, new energy vehicle ownership exceeds 1 million, charging facility coverage 95%</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 研发投入图表 -->
+            <div class="chart-container animate-on-scroll">
+                <h3 class="cn">北京研发投入增长趋势（2018-2025）</h3>
+                <h3 class="en">Beijing R&D Investment Growth Trend (2018-2025)</h3>
+                <div class="chart-wrapper">
+                    <canvas id="rdChart"></canvas>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 北京冬奥会专门板块 -->
+        <section class="content-section winter-olympics animate-on-scroll">
+            <div class="section-header">
+                <h2 class="cn">双奥之城：北京冬奥会遗产</h2>
+                <h2 class="en">Dual Olympic City: Beijing Winter Olympics Legacy</h2>
+            </div>
+            
+            <div class="section-content">
+                <div class="image-content">
+                    <!-- 冬奥会场馆对比滑动器 -->
+                    <div class="image-comparison">
+                        <img src="https://picsum.photos/id/335/800/600" alt="2008年夏季奥运会场馆" class="comparison-image">
+                        <img src="https://picsum.photos/id/338/800/600" alt="2022年冬季奥运会场馆" class="comparison-image">
+                    </div>
+                    <p class="image-caption cn">滑动对比：2008夏奥场馆与2022冬奥改造后场馆</p>
+                    <p class="image-caption en">Slide to compare: 2008 Summer Olympics venues vs 2022 Winter Olympics renovated venues</p>
+                </div>
+                
+                <div class="text-content">
+                    <p class="cn">作为世界首个"双奥之城"，北京冬奥会遗产持续发挥效益。2025年，冬奥场馆全年接待游客突破800万人次，成为体育文化旅游新地标。首钢园已转型为国际体育文化创意园区，吸引近200家科技创新和文化创意企业入驻。</p>
+                    <p class="en">As the world's first "Dual Olympic City," the legacy of the Beijing Winter Olympics continues to yield benefits. In 2025, Winter Olympic venues received over 8 million visitors annually, becoming new landmarks for sports and cultural tourism. Shougang Park has transformed into an international sports and cultural creative park, attracting nearly 200 technology innovation and cultural creative enterprises.</p>
+                    
+                    <div class="fact-cards">
+                        <div class="fact-card">
+                            <div class="fact-icon">
+                                <i class="fas fa-snowflake"></i>
+                            </div>
+                            <div class="fact-content">
+                                <h4 class="cn">绿色办奥</h4>
+                                <h4 class="en">Green Olympics</h4>
+                                <p class="cn">所有场馆100%使用可再生能源，碳排放趋近于零</p>
+                                <p class="en">100% of venues used renewable energy, with near-zero carbon emissions</p>
+                            </div>
+                        </div>
+                        
+                        <div class="fact-card">
+                            <div class="fact-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <div class="fact-content">
+                                <h4 class="cn">科技冬奥</h4>
+                                <h4 class="en">Hi-Tech Olympics</h4>
+                                <p class="cn">5G全覆盖、无人智慧餐厅、数字孪生场馆等技术应用</p>
+                                <p class="en">5G full coverage, unmanned smart restaurants, digital twin venues and more</p>
+                            </div>
+                        </div>
+                        
+                        <div class="fact-card">
+                            <div class="fact-icon">
+                                <i class="fas fa-recycle"></i>
+                            </div>
+                            <div class="fact-content">
+                                <h4 class="cn">可持续遗产</h4>
+                                <h4 class="en">Sustainable Legacy</h4>
+                                <p class="cn">8个2008年场馆改造再利用，节约建设成本约30%</p>
+                                <p class="en">8 venues from 2008 reused after renovation, saving ~30% construction costs</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 城市更新板块 -->
+        <section class="content-section animate-on-scroll">
+            <div class="section-header">
+                <h2 class="cn">城市更新与绿色发展</h2>
+                <h2 class="en">Urban Renewal & Green Development</h2>
+            </div>
+            
+            <div class="section-content">
+                <div class="text-content">
+                    <p class="cn">2025年，北京城市更新行动取得显著成效，完成核心区1000万平方米老旧小区改造，建设100条"美丽街巷"。城市副中心框架基本形成，行政办公区、城市绿心、环球主题公园等重点功能区全面投入使用。</p>
+                    <p class="en">In 2025, Beijing's urban renewal initiative achieved remarkable results, completing the renovation of 10 million square meters of old residential areas in the core zone and building 100 "beautiful streets." The framework of the city sub-center has basically taken shape, with key functional areas such as the administrative office area, urban green heart, and Universal Studios fully operational.</p>
+                    
+                    <p class="cn">绿色生态建设方面，北京森林覆盖率达到45.5%，建成区绿化覆盖率49.5%，人均公园绿地面积16.8平方米。温榆河公园、城市绿心森林公园等大型生态工程成为市民休闲游憩的新空间。</p>
+                    <p class="en">In terms of green ecological construction, Beijing's forest coverage rate reached 45.5%, the green coverage rate in built-up areas was 49.5%, and the per capita park green space area was 16.8 square meters. Large-scale ecological projects such as Wenyu River Park and Urban Green Heart Forest Park have become new spaces for citizens' leisure and recreation.</p>
+                </div>
+                
+                <div class="image-content">
+                    <img src="https://picsum.photos/id/1031/800/600" alt="首钢园现代转型" class="section-image">
+                    <p class="image-caption cn">首钢园——工业遗产与现代文明的完美融合</p>
+                    <p class="image-caption en">Shougang Park - Perfect integration of industrial heritage and modern civilization</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 国际交往板块 -->
+        <section class="content-section animate-on-scroll">
+            <div class="section-header">
+                <h2 class="cn">国际交往中心</h2>
+                <h2 class="en">International Exchange Center</h2>
+            </div>
+            
+            <div class="section-content">
+                <div class="image-content">
+                    <img src="https://picsum.photos/id/1048/800/600" alt="北京国际会议中心" class="section-image">
+                    <p class="image-caption cn">雁栖湖国际会都——国际高端会议举办地</p>
+                    <p class="image-caption en">Yanqi Lake International Conference Center - Venue for high-end international conferences</p>
+                </div>
+                
+                <div class="text-content">
+                    <p class="cn">2025年，北京已与58个国家的90个城市建立友好城市关系，外国驻华使馆达到176个。北京国际交往中心功能持续增强，成功举办"一带一路"国际合作高峰论坛、全球数字经济大会等重大国际活动。</p>
+                    <p class="en">By 2025, Beijing has established friendly city relations with 90 cities in 58 countries, with 176 foreign embassies in China. Beijing's function as an international exchange center continues to strengthen, successfully hosting major international events such as the Belt and Road Forum for International Cooperation and the Global Digital Economy Conference.</p>
+                    
+                    <p class="cn">北京大兴国际机场年旅客吞吐量突破7000万人次，航线网络覆盖全球120多个国家和地区的260多个城市，成为连接中国与世界的重要航空枢纽。</p>
+                    <p class="en">Beijing Daxing International Airport's annual passenger throughput exceeded 70 million, with a route network covering more than 260 cities in over 120 countries and regions, becoming an important aviation hub connecting China and the world.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- 广告位预留 -->
+    <div class="ad-section">
+        <div class="ad-container" id="ad-sidebar">
+            <!-- 谷歌广告将在这里插入 -->
+            <div class="ad-placeholder">广告位</div>
+		<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1130777358854864"
+		     crossorigin="anonymous"></script>
+		<!-- bj-tour-pos -->
+		<ins class="adsbygoogle"
+		     style="display:block"
+		     data-ad-client="ca-pub-1130777358854864"
+		     data-ad-slot="5193848163"
+		     data-ad-format="auto"
+		     data-full-width-responsive="true"></ins>
+		<script>
+		     (adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="cn">© 2025 北京城市介绍 | 探索这座城市的历史与未来</p>
+            <p class="en">© 2025 Beijing City Guide | Explore the history and future of the city</p>
+        </div>
+    </footer>
+    
+    <!-- 字体调节工具 -->
+    <div class="font-controls">
+        <button id="fontDecrease" class="font-btn">
+            <i class="fas fa-text-height"></i> A-
+        </button>
+        <button id="fontIncrease" class="font-btn">
+            <i class="fas fa-text-height"></i> A+
+        </button>
+    </div>
+    
+    <!-- 音频元素 -->
+    <audio id="backgroundMusic" loop>
+        <source src="assets/audio/bgm.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- 脚本 -->
+    <script src="assets/js/lang.js"></script>
+    <script src="assets/js/ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="assets/js/modern.js"></script>
+    <script>
+        // 更新2025年研发投入图表数据
+        function initRdChart() {
+            const ctx = document.getElementById('rdChart').getContext('2d');
+            const isEn = document.documentElement.classList.contains('lang-en');
+            
+            // 2018-2025年研发投入数据（单位：亿元）
+            const data = {
+                labels: ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+                datasets: [{
+                    label: isEn ? 'R&D Investment (100 million yuan)' : '研发投入（亿元）',
+                    data: [1627, 1850, 2022, 2259, 2442, 2680, 3020, 3380],
+                    borderColor: '#c8102e', // 北京红色
+                    backgroundColor: 'rgba(200, 16, 46, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.3,
+                    pointBackgroundColor: '#c8102e',
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#c8102e',
+                    pointHoverBorderWidth: 2
+                }]
+            };
+            
+            // 图表配置
+            const config = {
+                type: 'line',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: {
+                        duration: 2000,
+                        easing: 'easeOutQuart',
+                        delay: function(context) {
+                            return context.dataIndex * 100;
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: false,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            },
+                            title: {
+                                display: true,
+                                text: isEn ? 'Amount (100 million yuan)' : '金额（亿元）',
+                                font: {
+                                    size: 16
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            title: {
+                                display: true,
+                                text: isEn ? 'Year' : '年份',
+                                font: {
+                                    size: 16
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                            padding: 12,
+                            titleFont: {
+                                size: 16
+                            },
+                            bodyFont: {
+                                size: 14
+                            },
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y + ' ' + (isEn ? '100 million yuan' : '亿元');
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            
+            // 创建图表实例并保存
+            if (window.rdChart) {
+                window.rdChart.destroy();
+            }
+            window.rdChart = new Chart(ctx, config);
+        }
+        
+        // 页面加载完成后初始化图表
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof Chart !== 'undefined') {
+                const chartElement = document.getElementById('rdChart');
+                if (chartElement) {
+                    initRdChart();
+                }
+            } else {
+                console.warn('Chart.js未加载，图表功能不可用');
+            }
+        });
+    </script>
+</body>
+</html>
